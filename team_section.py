@@ -88,18 +88,22 @@ def main(page: ft.Page):
                             infos['frase'],
                             size=13,
                             italic=True,
+                            color='#000000',
                         ),
                         ft.Text(
                             infos['telefone'],
                             size=13,
+                            color='#000000',
                         ),
                         ft.Text(
                             infos['e-mail'],
                             size=13,
+                            color='#000000',
                         ),
                         ft.Text(
                             infos['github'],
                             size=13,
+                            color='#000000',
                         ),
                     ],
                     height=370,

@@ -180,6 +180,7 @@ def main(page: ft.Page):
                                                     content=ft.Text(
                                                         'Olá!',
                                                         size=12,
+                                                        color='#000000',
                                                     ),
                                                     on_tap=lambda e: page.open(login_tela),
                                                     mouse_cursor=ft.MouseCursor.CLICK,
@@ -230,6 +231,7 @@ def main(page: ft.Page):
                                                         'Carrinho',
                                                         weight=ft.FontWeight.BOLD,
                                                         size=12,
+                                                        color='#000000'
                                                     ),
                                                     on_tap=lambda e: None,
                                                     mouse_cursor=ft.MouseCursor.CLICK
@@ -299,6 +301,7 @@ def main(page: ft.Page):
                                             content=ft.Text(
                                                 'Olá!',
                                                 size=12,
+                                                color='#000000',
                                             ),
                                             on_tap=lambda e: page.open(login_tela),
                                             mouse_cursor=ft.MouseCursor.CLICK,
@@ -308,6 +311,7 @@ def main(page: ft.Page):
                                                 'Entre / Registre-se', 
                                                 weight=ft.FontWeight.BOLD,
                                                 size=12,
+                                                color='#000000',
                                             ),
                                             on_tap=lambda e:page.open(login_tela),
                                             mouse_cursor=ft.MouseCursor.CLICK
@@ -338,6 +342,7 @@ def main(page: ft.Page):
                                             'Carrinho',
                                             weight=ft.FontWeight.BOLD,
                                             size=12,
+                                            color='#000000',
                                         ),
                                     ],
                                     spacing=0,

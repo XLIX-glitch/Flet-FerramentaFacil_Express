@@ -197,6 +197,7 @@ def main(page: ft.Page):
                                 a['pergunta'],
                                 weight=ft.FontWeight.BOLD,
                                 size=17,
+                                color='#000000',
                             ),
                             mouse_cursor=ft.MouseCursor.CLICK,
                         ),
@@ -206,6 +207,7 @@ def main(page: ft.Page):
                         ft.Text(
                             a['resposta'],
                             text_align=ft.TextAlign.JUSTIFY,
+                            color='#000000',
                         ),
                         padding=ft.padding.all(15)
                     ),
