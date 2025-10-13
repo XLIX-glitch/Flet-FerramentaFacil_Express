@@ -169,3 +169,32 @@ faq_informacoes = {
         },
     ],
 }
+
+produtos_organizados = {
+    'Ferramentas Elétricas': [
+        {'id': 201, 'nome': 'Furadeira de Impacto', 'marca': 'Bosch', 'descricao': 'Furadeira elétrica de impacto 500W, ideal para alvenaria.', 'preco': 150.00, 'estoque': 5631, 'imagem_url': ''},
+        {'id': 202, 'nome': 'Lixadeira Orbital', 'marca': 'Makita', 'descricao': 'Lixadeira orbital 300W com saco coletor de pó.', 'preco': 120.00, 'estoque': 4268, 'imagem_url': ''},
+        {'id': 203, 'nome': 'Serra Circular', 'marca': 'DeWalt', 'descricao': 'Serra circular 1200W com guia de corte a laser.', 'preco': 250.00, 'estoque': 9532, 'imagem_url': ''},
+        {'id': 204, 'nome': 'Parafusadeira Sem Fio', 'marca': 'Black+Decker', 'descricao': 'Parafusadeira sem fio 18V com bateria de íon de lítio.', 'preco': 350.00, 'estoque': 9684, 'imagem_url': ''},
+        {'id': 205, 'nome': 'Serra Tico-Tico', 'marca': 'Bosch', 'descricao': 'Serra tico-tico 450W, troca rápida de lâminas.', 'preco': 180.00, 'estoque': 8432, 'imagem_url': ''},
+        {'id': 206, 'nome': 'Pistola de Cola Quente', 'marca': 'Tramontina', 'descricao': 'Pistola de cola quente 60W, aquecimento rápido e bico isolado.', 'preco': 55.00, 'estoque': 6793, 'imagem_url': ''}
+    ],
+    'Ferramentas Manuais': [
+        {'id': 101, 'nome': 'Martelo Unha', 'marca': 'Tramontina', 'descricao': 'Martelo de aço forjado 500g com cabo emborrachado.', 'preco': 25.90, 'estoque': 8090, 'imagem_url': ''},
+        {'id': 102, 'nome': 'Chave de Fenda', 'marca': 'Vonder', 'descricao': 'Chave de fenda Phillips 6mm com ponta magnetizada.', 'preco': 15.50, 'estoque': 8349, 'imagem_url': ''},
+        {'id': 103, 'nome': 'Serrote Profissional', 'marca': 'Stanley', 'descricao': 'Serrote de 12 polegadas com dentes afiados para corte rápido.', 'preco': 40.00, 'estoque': 8542, 'imagem_url': ''},
+        {'id': 104, 'nome': 'Alicate Universal', 'marca': 'Gedore', 'descricao': 'Alicate universal 8 polegadas com isolamento elétrico.', 'preco': 30.00, 'estoque': 6472, 'imagem_url': ''},
+        {'id': 105, 'nome': 'Trena Profissional', 'marca': 'Starrett', 'descricao': 'Trena de 5 metros com trava e leitura métrica/imperial.', 'preco': 20.00, 'estoque': 2746, 'imagem_url': ''},
+        {'id': 106, 'nome': 'Nível de Bolha', 'marca': 'DeWalt', 'descricao': 'Nível de bolha de 60cm em alumínio, com 3 bolhas.', 'preco': 35.00, 'estoque': 4713, 'imagem_url': ''},
+        {'id': 107, 'nome': 'Chave Inglesa', 'marca': 'King Tony', 'descricao': 'Chave inglesa ajustável de 10 polegadas em cromo vanádio.', 'preco': 45.00, 'estoque': 5721, 'imagem_url': ''},
+        {'id': 108, 'nome': 'Conjunto Chaves Allen', 'marca': 'Tramontina', 'descricao': 'Conjunto de 9 chaves Allen hexagonais com suporte organizador.', 'preco': 25.00, 'estoque': 9856, 'imagem_url': ''}
+    ],
+    'Acessórios': [
+        {'id': 301, 'nome': 'Kit de Parafusos', 'marca': 'Vonder', 'descricao': 'Pacote com 100 parafusos autoatarraxantes diversos tamanhos.', 'preco': 10.00, 'estoque': 7926, 'imagem_url': ''},
+        {'id': 302, 'nome': 'Escada de Alumínio', 'marca': 'Botafogo', 'descricao': 'Escada de alumínio dobrável com 5 degraus, capacidade 120kg.', 'preco': 200.00, 'estoque': 7825, 'imagem_url': ''},
+        {'id': 303, 'nome': 'Caixa de Ferramentas', 'marca': 'GreatStar', 'descricao': 'Caixa de ferramentas com 50 peças essenciais para o lar.', 'preco': 300.00, 'estoque': 7822, 'imagem_url': ''},
+        {'id': 304, 'nome': 'Kit de Brocas', 'marca': 'Starrett', 'descricao': 'Kit de 10 brocas HSS para madeira e metal.', 'preco': 40.00, 'estoque': 7962, 'imagem_url': ''},
+        {'id': 305, 'nome': 'Cinta de Amarração', 'marca': 'FixaTudo', 'descricao': 'Cinta de amarração com catraca de 5 metros.', 'preco': 15.00, 'estoque': 9825, 'imagem_url': ''},
+        {'id': 306, 'nome': 'Luva de Proteção', 'marca': 'ProSafety', 'descricao': 'Par de luvas de proteção em raspa e lona, tamanho único.', 'preco': 12.00, 'estoque': 8964, 'imagem_url': ''}
+    ]
+}

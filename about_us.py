@@ -17,6 +17,17 @@ def main(page: ft.Page):
     page.bgcolor = '#FFFFFF'
     page.scroll = ft.ScrollMode.AUTO
 
+    texto_teste = ft.Container(
+        ft.Row(
+            [
+                ft.Text(
+                    'Esta vai ser a página de About Us!',
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+        ),
+    )
+
     botao_retornar = ft.Container(
         ft.ResponsiveRow(
             [
@@ -36,6 +47,7 @@ def main(page: ft.Page):
     page.add(
         ft.Column(
             [
+                texto_teste,
                 botao_retornar,
             ],
         ),
@@ -44,4 +56,47 @@ def main(page: ft.Page):
     page.update()
 
 if __name__ == '__main__':
-    ft.app(target=main)
+    ft.app(main, assets_dir="assets")
+
+    # Teste para login - Ignorar!
+    # ft.MenuBar(
+    #                                         style=ft.MenuStyle(
+    #                                             mouse_cursor={
+    #                                                 ft.ControlState.HOVERED: ft.MouseCursor.CLICK
+    #                                             },
+    #                                             alignment=ft.alignment.center,
+    #                                             bgcolor='#102739',
+    #                                             elevation=0,
+    #                                         ),
+    #                                         controls=[
+    #                                             ft.SubmenuButton(
+    #                                                 content=ft.Text(
+    #                                                     'Categorias',
+    #                                                     weight=ft.FontWeight.BOLD,
+    #                                                     color='#FFFFFF',
+    #                                                     font_family='Verdana',
+    #                                                     size=13
+    #                                                 ),
+    #                                                 controls=[
+    #                                                     ft.MenuItemButton(
+    #                                                         content=ft.Text(
+    #                                                             'Sua Conta',
+    #                                                         ),
+    #                                                         on_click=lambda e: ferramentas_eletricas_page.main(page),
+    #                                                     ),
+    #                                                     ft.MenuItemButton(
+    #                                                         content=ft.Text(
+    #                                                             'Cadastrar-se'
+    #                                                         ),
+    #                                                         on_click=lambda e: ferramentas_manuais_page.main(page),
+    #                                                     ),
+    #                                                     ft.MenuItemButton(
+    #                                                         content=ft.Text(
+    #                                                             'Desconectar-se'
+    #                                                         ),
+    #                                                         on_click=lambda e: acessorios_page.main(page),
+    #                                                     ),
+    #                                                 ]
+    #                                             ),
+    #                                         ]
+    #                                     ),

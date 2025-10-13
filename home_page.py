@@ -1,8 +1,13 @@
 import flet as ft
+from pathlib import Path
 
 import team_section
 import faq_page
 import about_us
+
+import ferramentas_eletricas_page
+import ferramentas_manuais_page
+import acessorios_page
 
 def main(page: ft.Page):
     page.clean()
@@ -18,6 +23,33 @@ def main(page: ft.Page):
     
     page.bgcolor = '#FFFFFF'
     page.scroll = ft.ScrollMode.AUTO
+
+    def next_image(e):
+        nonlocal index
+        index = (index + 1) % len(imagens)
+        switcher.content = ft.Image(
+            src=imagens[index],
+            fit=ft.ImageFit.COVER,
+            border_radius=10,
+            expand=True,
+        )
+        switcher.transition = ft.AnimatedSwitcherTransition.FADE
+
+        switcher.update()
+    
+    def previous_image(e):
+        nonlocal index
+        index = (index - 1) % len(imagens)
+        switcher.content = ft.Image(
+            src=imagens[index],
+            fit=ft.ImageFit.COVER,
+            border_radius=10,
+            expand=True,
+        )
+        switcher.transition = ft.AnimatedSwitcherTransition.FADE
+
+        switcher.update()
+
 
     login_tela = ft.AlertDialog(
         title=ft.Text(
@@ -124,7 +156,7 @@ def main(page: ft.Page):
         shape=ft.RoundedRectangleBorder(radius=18.0),
     )
 
-    header_2 = ft.Container(
+    header = ft.Container(
         content=ft.ResponsiveRow(
             [   
                 ft.Column(
@@ -139,7 +171,7 @@ def main(page: ft.Page):
                                     [
                                         ft.GestureDetector(
                                             ft.Image(
-                                                src='imagens/logo_empresa_p_header2.png',  
+                                                src='Flet - Loja Online Versão 1.3.8/assets/imagens/logo_empresa_p_header2.png',  
                                                 fit=ft.ImageFit.CONTAIN,
                                             ),
                                             on_tap=lambda e: None,
@@ -167,7 +199,7 @@ def main(page: ft.Page):
                                     [
                                         ft.GestureDetector(
                                             ft.Image(
-                                                src='imagens/icone_login.png',
+                                                src='Flet - Loja Online Versão 1.3.8/assets/imagens/icone_login.png',
                                                 width=30,
                                                 height=30,
                                             ),
@@ -205,9 +237,10 @@ def main(page: ft.Page):
                                 ),
                                 ft.Row(
                                     [
+                                        
                                         ft.GestureDetector(
                                             ft.Image(
-                                                src='imagens/icone_carrinho.png',
+                                                src='Flet - Loja Online Versão 1.3.8/assets/imagens/icone_carrinho.png',
                                                 width=30,
                                                 height=30,
                                             ),
@@ -263,104 +296,6 @@ def main(page: ft.Page):
         padding=ft.padding.only(left=30, right=30, top=20, bottom=20),
     )
 
-    header = ft.Container(
-        content=ft.Row(
-            [
-                ft.Row(
-                    [
-                        ft.Image(
-                            src='imagens/logo_empresa_p_header2.png', 
-                            width=220, 
-                            height=80, 
-                            fit=ft.ImageFit.CONTAIN,
-                        ),
-
-                        ft.TextField(
-                            hint_text='Buscar produtos, marcas e muito mais...', 
-                            bgcolor='#FFFFFF', 
-                            border_radius=8,
-                            width=700,
-                            height=40,
-                        ),
-
-                        ft.Row(
-                            [
-                                ft.GestureDetector(
-                                    ft.Image(
-                                        src='imagens/icone_login.png',
-                                        width=30,
-                                        height=30,
-                                    ),
-                                    on_tap=lambda e: page.open(login_tela),
-                                    mouse_cursor=ft.MouseCursor.CLICK,
-                                ),
-                                
-                                ft.Column(
-                                    [
-                                        ft.GestureDetector(
-                                            content=ft.Text(
-                                                'Olá!',
-                                                size=12,
-                                                color='#000000',
-                                            ),
-                                            on_tap=lambda e: page.open(login_tela),
-                                            mouse_cursor=ft.MouseCursor.CLICK,
-                                        ),
-                                        ft.GestureDetector(
-                                            ft.Text(
-                                                'Entre / Registre-se', 
-                                                weight=ft.FontWeight.BOLD,
-                                                size=12,
-                                                color='#000000',
-                                            ),
-                                            on_tap=lambda e:page.open(login_tela),
-                                            mouse_cursor=ft.MouseCursor.CLICK
-                                        )
-                                    ],
-                                    spacing=0,
-                                    alignment=ft.MainAxisAlignment.CENTER,
-                                ),
-                            ],
-                        ),
-                        ft.Row(
-                            [
-                                ft.Image(
-                                    src='imagens/icone_carrinho.png', 
-                                    width=30,
-                                    height=30,
-                                ),
-
-                                ft.Column(
-                                    [
-                                        ft.Text(
-                                            '(Produtos...)', 
-                                            size=12,
-                                            bgcolor='#FFFFFF',
-                                            weight=ft.FontWeight.BOLD,
-                                        ),
-                                        ft.Text(
-                                            'Carrinho',
-                                            weight=ft.FontWeight.BOLD,
-                                            size=12,
-                                            color='#000000',
-                                        ),
-                                    ],
-                                    spacing=0,
-                                    alignment=ft.MainAxisAlignment.CENTER,
-                                ),
-                            ],
-                        ),
-                    ],
-                )
-            ],
-            alignment=ft.MainAxisAlignment.CENTER
-        ),
-        bgcolor="#F2FF00",
-        height=80,
-        padding=ft.padding.only(left=60, right=60),
-        alignment=ft.alignment.center
-    )
-
     navbar = ft.Container(
         content=ft.ResponsiveRow(
             [
@@ -379,67 +314,142 @@ def main(page: ft.Page):
                             [
                                 ft.Column(
                                     [
-                                        ft.GestureDetector(
-                                            ft.Text(
-                                                'Home',
-                                                weight=ft.FontWeight.BOLD,
-                                                color='#FFFFFF',
-                                                font_family='Verdana',
-                                                size=13,
+                                        ft.MenuBar(
+                                            style=ft.MenuStyle(
+                                                mouse_cursor={
+                                                    ft.ControlState.HOVERED: ft.MouseCursor.CLICK
+                                                },
+                                                alignment=ft.alignment.center,
+                                                bgcolor='#102739',
+                                                elevation=0,
                                             ),
-                                            on_tap=lambda e: None,
-                                            mouse_cursor=ft.MouseCursor.CLICK,                                       
-                                        )
+                                            controls=[
+                                                ft.SubmenuButton(
+                                                    ft.GestureDetector(
+                                                        content=ft.Text(
+                                                            'Home',
+                                                            weight=ft.FontWeight.BOLD,
+                                                            color='#FFFFFF',
+                                                            font_family='Verdana',
+                                                            size=13,
+                                                        ),
+                                                        on_tap=lambda e:None,
+                                                        mouse_cursor=ft.MouseCursor.CLICK,
+
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
                                     ],
                                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                                     col={"xs": 12, "sm": 6, "md": 1},
                                 ),
                                 ft.Column(
                                     [
-                                        ft.GestureDetector(
-                                            ft.Text(
-                                                'Categorias',
-                                                weight=ft.FontWeight.BOLD,
-                                                color='#FFFFFF',
-                                                font_family='Verdana',
-                                                size=13,
+                                        ft.MenuBar(
+                                            style=ft.MenuStyle(
+                                                mouse_cursor={
+                                                    ft.ControlState.HOVERED: ft.MouseCursor.CLICK
+                                                },
+                                                alignment=ft.alignment.center,
+                                                bgcolor='#102739',
+                                                elevation=0,
                                             ),
-                                            on_tap=lambda e: None,
-                                            mouse_cursor=ft.MouseCursor.CLICK,
-                                        )
+                                            controls=[
+                                                ft.SubmenuButton(
+                                                    content=ft.Text(
+                                                        'Categorias',
+                                                        weight=ft.FontWeight.BOLD,
+                                                        color='#FFFFFF',
+                                                        font_family='Verdana',
+                                                        size=13
+                                                    ),
+                                                    controls=[
+                                                        ft.MenuItemButton(
+                                                            content=ft.Text(
+                                                                'Ferramentas Elétricas',
+                                                            ),
+                                                            on_click=lambda e: ferramentas_eletricas_page.main(page),
+                                                        ),
+                                                        ft.MenuItemButton(
+                                                            content=ft.Text(
+                                                                'Ferramentas Manuais'
+                                                            ),
+                                                            on_click=lambda e: ferramentas_manuais_page.main(page),
+                                                        ),
+                                                        ft.MenuItemButton(
+                                                            content=ft.Text(
+                                                                'Acessórios'
+                                                            ),
+                                                            on_click=lambda e: acessorios_page.main(page),
+                                                        ),
+                                                    ]
+                                                ),
+                                            ]
+                                        ),
                                     ],
                                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                                    col={"xs": 12, "sm": 6, "md": 1},
+                                    col={"xs": 12, "sm": 6, "md": 1.3},
                                 ),
                                 ft.Column(
                                     [
-                                        ft.GestureDetector(
-                                            ft.Text(
-                                                'Produtos',
-                                                weight=ft.FontWeight.BOLD,
-                                                color='#FFFFFF',
-                                                font_family='Verdana',
-                                                size=13,
+                                        ft.MenuBar(
+                                            style=ft.MenuStyle(
+                                                mouse_cursor={
+                                                    ft.ControlState.HOVERED: ft.MouseCursor.CLICK
+                                                },
+                                                alignment=ft.alignment.center,
+                                                bgcolor='#102739',
+                                                elevation=0,
                                             ),
-                                            on_tap=lambda e: None,
-                                            mouse_cursor=ft.MouseCursor.CLICK,    
-                                        )
+                                            controls=[
+                                                ft.SubmenuButton(
+                                                    ft.GestureDetector(
+                                                        content=ft.Text(
+                                                            'Produtos',
+                                                            weight=ft.FontWeight.BOLD,
+                                                            color='#FFFFFF',
+                                                            font_family='Verdana',
+                                                            size=13,
+                                                        ),
+                                                        on_tap=lambda e:None,
+                                                        mouse_cursor=ft.MouseCursor.CLICK,
+
+                                                    ),
+                                                ),
+                                            ],
+                                        ),
                                     ],
                                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                                    col={"xs": 12, "sm": 6, "md": 1},
+                                    col={"xs": 12, "sm": 6, "md": 1.1},
                                 ),
                                 ft.Column(
                                     [
-                                        ft.GestureDetector(
-                                            ft.Text(
-                                                'Ofertas',
-                                                weight=ft.FontWeight.BOLD,
-                                                color='#FFFFFF',
-                                                font_family='Verdana',
-                                                size=13,
+                                        ft.MenuBar(
+                                            style=ft.MenuStyle(
+                                                mouse_cursor={
+                                                    ft.ControlState.HOVERED: ft.MouseCursor.CLICK
+                                                },
+                                                alignment=ft.alignment.center,
+                                                bgcolor='#102739',
+                                                elevation=0,
                                             ),
-                                            on_tap=lambda e: None,
-                                            mouse_cursor=ft.MouseCursor.CLICK,
+                                            controls=[
+                                                ft.SubmenuButton(
+                                                    ft.GestureDetector(
+                                                        content=ft.Text(
+                                                            'Ofertas',
+                                                            weight=ft.FontWeight.BOLD,
+                                                            color='#FFFFFF',
+                                                            font_family='Verdana',
+                                                            size=13,
+                                                        ),
+                                                        on_tap=lambda e:None,
+                                                        mouse_cursor=ft.MouseCursor.CLICK,
+
+                                                    ),
+                                                ),
+                                            ],
                                         ),
                                     ],
                                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -450,21 +460,36 @@ def main(page: ft.Page):
                                     [
 
                                     ],
-                                    col={"xs": 0, "sm": 0, "md": 7}
+                                    col={"xs": 0, "sm": 0, "md": 6.6}
 
                                 ),
                                 ft.Column(
                                     [
-                                        ft.GestureDetector(
-                                            ft.Text(
-                                                'Ajuda',
-                                                weight=ft.FontWeight.BOLD,
-                                                color='#FFFFFF',
-                                                font_family='Verdana',
-                                                size=13,
+                                        ft.MenuBar(
+                                            style=ft.MenuStyle(
+                                                mouse_cursor={
+                                                    ft.ControlState.HOVERED: ft.MouseCursor.CLICK
+                                                },
+                                                alignment=ft.alignment.center,
+                                                bgcolor='#102739',
+                                                elevation=0,
                                             ),
-                                            on_tap=lambda e: faq_page.main(page),
-                                            mouse_cursor=ft.MouseCursor.CLICK,
+                                            controls=[
+                                                ft.SubmenuButton(
+                                                    ft.GestureDetector(
+                                                        content=ft.Text(
+                                                            'Ajuda',
+                                                            weight=ft.FontWeight.BOLD,
+                                                            color='#FFFFFF',
+                                                            font_family='Verdana',
+                                                            size=13,
+                                                        ),
+                                                        on_tap=lambda e:faq_page.main(page),
+                                                        mouse_cursor=ft.MouseCursor.CLICK,
+
+                                                    ),
+                                                ),
+                                            ],
                                         ),
                                     ],
                                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
@@ -487,23 +512,12 @@ def main(page: ft.Page):
         ),
         bgcolor='#102739',
         alignment=ft.alignment.center,
-        padding=ft.padding.only(left=30, right=30, top=15, bottom=15),
+        padding=ft.padding.only(left=30, right=30, top=8, bottom=8),
     )
 
     hero_section = ft.Container(
         content=ft.Stack(
             [
-                
-                ft.Container(
-                    content=ft.Image(
-                        src='imagens/LayoutLogin.png',
-                        height=500,
-                        fit=ft.ImageFit.CONTAIN,
-                    ),
-                    alignment=ft.alignment.center,
-                    
-                ),
-
                 ft.Container(
                     content=ft.Column(
                         [
@@ -527,6 +541,16 @@ def main(page: ft.Page):
                     alignment=ft.alignment.center,
                     expand=True,
                 ),
+
+                ft.Container(
+                    content=ft.Image(
+                        src='Flet - Loja Online Versão 1.3.8/assets/imagens/LayoutLogin.png',
+                        height=500,
+                        fit=ft.ImageFit.CONTAIN,
+                    ),
+                    alignment=ft.alignment.center,
+                ),
+
             ],
         ),
         height=500,  
@@ -535,6 +559,99 @@ def main(page: ft.Page):
         margin=ft.margin.only(top=0, bottom=20)
     )
 
+    base_dir = Path(__file__).parent
+
+    pasta_imagens = base_dir / "assets" / "imagens" / "imagens_carousel"
+
+    imagens = [str(img) 
+               for img in pasta_imagens.glob("*") 
+               if img.suffix.lower() in (".png", ".jpg", ".jpeg", ".gif")
+    ]
+
+    if not imagens:
+        page.add(ft.Text("Nenhuma imagem encontrada no diretório."))
+        return
+
+    index = 0
+
+    switcher = ft.AnimatedSwitcher(
+        content=ft.Image(
+            src=imagens[index],
+            fit=ft.ImageFit.COVER,
+            border_radius=10,
+        ),
+        transition=ft.AnimatedSwitcherTransition.SCALE,
+        duration=600,
+        reverse_duration=100,
+        switch_in_curve=ft.AnimationCurve.BOUNCE_OUT,
+        switch_out_curve=ft.AnimationCurve.BOUNCE_IN,
+        expand=True,
+    )
+
+    carousel_image = ft.Container(
+        content=switcher,
+        height=400,
+        expand=True,
+        border_radius=8,
+        alignment=ft.alignment.center,
+    )
+
+    carousel_buttons = ft.Container(
+        content=ft.Row(
+            [
+                ft.IconButton(
+                    icon=ft.Icons.CHEVRON_LEFT,
+                    tooltip=ft.Tooltip(
+                        message='Anterior'
+                    ),
+                    icon_color='#FF5100',
+                    icon_size=30,
+                    on_click=previous_image,
+                ),
+                ft.IconButton(
+                    icon=ft.Icons.CHEVRON_RIGHT,
+                    tooltip=ft.Tooltip(
+                        message='Próximo',
+                    ),
+                    icon_color='#FF5100',
+                    icon_size=30,
+                    on_click=next_image,
+                ),
+            ],
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            vertical_alignment=ft.CrossAxisAlignment.CENTER,
+        ),
+        expand=True,
+        alignment=ft.alignment.center,
+        padding=ft.padding.only(left=10, right=10),
+        bgcolor=None,
+    )
+
+    carousel_content = ft.Stack(
+        [carousel_image, carousel_buttons],
+        expand=True,
+        alignment=ft.alignment.center,
+    )
+
+    carousel = ft.ResponsiveRow(
+        [
+            ft.Column(
+                [], 
+                col={"xs": 0, "sm": 1},
+            ),
+            ft.Column(
+                [
+                    carousel_content,
+                ],
+                col={"xs": 12, "sm": 10},
+            ),
+            ft.Column(
+                [], 
+                col={"xs": 0, "sm": 1},
+            ),
+        ],
+    )
+    
     footer = ft.ResponsiveRow(
         [
             ft.Container(
@@ -637,7 +754,7 @@ def main(page: ft.Page):
                                                 ft.Row(
                                                     [
                                                         ft.Image(
-                                                            src='imagens/facebook_logo.png', 
+                                                            src='Flet - Loja Online Versão 1.3.8/assets/imagens/facebook_logo.png', 
                                                             width=24, 
                                                             height=24, 
                                                             fit=ft.ImageFit.CONTAIN,
@@ -656,7 +773,7 @@ def main(page: ft.Page):
                                                 ft.Row(
                                                     [
                                                         ft.Image(
-                                                            src='imagens/instagram_logo.png', 
+                                                            src='Flet - Loja Online Versão 1.3.8/assets/imagens/instagram_logo.png', 
                                                             width=24, 
                                                             height=24, 
                                                             fit=ft.ImageFit.CONTAIN,
@@ -674,7 +791,7 @@ def main(page: ft.Page):
                                                 ft.Row(
                                                     [
                                                         ft.Image(
-                                                            src='imagens/youtube_logo.png', 
+                                                            src='Flet - Loja Online Versão 1.3.8/assets/imagens/youtube_logo.png', 
                                                             width=24, 
                                                             height=24, 
                                                             fit=ft.ImageFit.CONTAIN,
@@ -692,7 +809,7 @@ def main(page: ft.Page):
                                                 ft.Row(
                                                     [
                                                         ft.Image(
-                                                            src='imagens/twitter_logo.png', 
+                                                            src='Flet - Loja Online Versão 1.3.8/assets/imagens/twitter_logo.png', 
                                                             width=24, 
                                                             height=24, 
                                                             fit=ft.ImageFit.CONTAIN,
@@ -758,6 +875,7 @@ def main(page: ft.Page):
                 alignment=ft.alignment.center,
                 padding=ft.padding.only(left=30, right=30, top=24, bottom=24),
                 border_radius=ft.border_radius.all(6),
+                margin=ft.margin.only(top=20, bottom=10),
                 col={"xs": 12, "sm": 12, "md": 10, "lg": 10}
             ),
 
@@ -782,12 +900,12 @@ def main(page: ft.Page):
         ft.Column(
             [
                 juntar_header,
-                header_2,
                 hero_section,
+                carousel,
                 ft.Container(
                     footer,
                     alignment=ft.alignment.center,
-                    margin=ft.margin.only(top=20),
+                    margin=ft.margin.only(top=15),
                 ),
             ],
             expand=True,
@@ -797,4 +915,4 @@ def main(page: ft.Page):
     page.update()
 
 if __name__ == '__main__':
-    ft.app(target=main)
+    ft.app(target=main, assets_dir="assets")

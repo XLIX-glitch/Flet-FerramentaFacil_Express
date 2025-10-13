@@ -5,7 +5,7 @@ from dicionarios import equipe_dados
 
 def main(page: ft.Page):
     page.clean()
-    page.title = 'As Mentes por Trás da Eficiência'
+    page.title = 'As Mentes por Trás da Eficiência - FerramentaFácil Express'
 
     page.fonts = {
         "Open Sans": "fonts/OpenSans-Regular.ttf",        
@@ -157,4 +157,4 @@ def main(page: ft.Page):
     page.update()
 
 if __name__ == '__main__':
-    ft.app(main)
+    ft.app(main, assets_dir="assets")
