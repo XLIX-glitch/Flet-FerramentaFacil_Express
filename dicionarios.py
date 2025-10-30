@@ -172,12 +172,12 @@ faq_informacoes = {
 
 produtos_organizados = {
     'Ferramentas Elétricas': [
-        {'id': 201, 'nome': 'Furadeira de Impacto', 'marca': 'Bosch', 'descricao': 'Furadeira elétrica de impacto 500W, ideal para alvenaria.', 'preco': 150.00, 'estoque': 5631, 'imagem_url': ''},
-        {'id': 202, 'nome': 'Lixadeira Orbital', 'marca': 'Makita', 'descricao': 'Lixadeira orbital 300W com saco coletor de pó.', 'preco': 120.00, 'estoque': 4268, 'imagem_url': ''},
+        {'id': 201, 'nome': 'Furadeira de Impacto', 'marca': 'Desoon', 'descricao': 'Furadeira elétrica de impacto 500W, ideal para alvenaria.', 'preco': 150.00, 'estoque': 5631, 'imagem_url': 'Flet - Loja Online Versão 1.3.8/assets/imagens/imagens_produtos/furadeira_de_impacto_500W_produto.jpg'},
+        {'id': 202, 'nome': 'Lixadeira Orbital', 'marca': 'Bosch', 'descricao': 'Lixadeira orbital 220W com saco coletor de pó.', 'preco': 120.00, 'estoque': 4268, 'imagem_url': ''},
         {'id': 203, 'nome': 'Serra Circular', 'marca': 'DeWalt', 'descricao': 'Serra circular 1200W com guia de corte a laser.', 'preco': 250.00, 'estoque': 9532, 'imagem_url': ''},
         {'id': 204, 'nome': 'Parafusadeira Sem Fio', 'marca': 'Black+Decker', 'descricao': 'Parafusadeira sem fio 18V com bateria de íon de lítio.', 'preco': 350.00, 'estoque': 9684, 'imagem_url': ''},
         {'id': 205, 'nome': 'Serra Tico-Tico', 'marca': 'Bosch', 'descricao': 'Serra tico-tico 450W, troca rápida de lâminas.', 'preco': 180.00, 'estoque': 8432, 'imagem_url': ''},
-        {'id': 206, 'nome': 'Pistola de Cola Quente', 'marca': 'Tramontina', 'descricao': 'Pistola de cola quente 60W, aquecimento rápido e bico isolado.', 'preco': 55.00, 'estoque': 6793, 'imagem_url': ''}
+        {'id': 206, 'nome': 'Pistola de Cola Quente', 'marca': 'Tramontina', 'descricao': 'Pistola de cola quente 25W, aquecimento rápido e bico isolado.', 'preco': 55.00, 'estoque': 6793, 'imagem_url': ''}
     ],
     'Ferramentas Manuais': [
         {'id': 101, 'nome': 'Martelo Unha', 'marca': 'Tramontina', 'descricao': 'Martelo de aço forjado 500g com cabo emborrachado.', 'preco': 25.90, 'estoque': 8090, 'imagem_url': ''},

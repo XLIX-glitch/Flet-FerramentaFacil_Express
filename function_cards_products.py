@@ -7,10 +7,15 @@ def cards_produtos (lista_produtos: list):
 
     for produto in lista_produtos:
         if produto.get('imagem_url'):
-            imagem_card = ft.Image(
-                src=produto['imagem_url'],
-                fit=ft.ImageFit.COVER,
-                height=150,
+            imagem_card = ft.Row(
+                [
+                    ft.Image(
+                        src=produto['imagem_url'],
+                        fit=ft.ImageFit.COVER,
+                        height=150,
+                    ),
+                ],
+                alignment=ft.alignment.center
             )
         else:
             imagem_card = ft.Container(

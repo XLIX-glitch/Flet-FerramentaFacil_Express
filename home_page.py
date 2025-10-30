@@ -9,6 +9,10 @@ import ferramentas_eletricas_page
 import ferramentas_manuais_page
 import acessorios_page
 
+from dicionarios import produtos_organizados
+
+from function_cards_products import cards_produtos, criar_content_produtos 
+
 def main(page: ft.Page):
     page.clean()
     page.title = 'Menu Principal - FerramentaFácil Express'
@@ -341,7 +345,7 @@ def main(page: ft.Page):
                                             ],
                                         ),
                                     ],
-                                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                                    horizontal_alignment=ft.CrossAxisAlignment.START,
                                     col={"xs": 12, "sm": 6, "md": 1},
                                 ),
                                 ft.Column(
@@ -492,7 +496,7 @@ def main(page: ft.Page):
                                             ],
                                         ),
                                     ],
-                                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                                    horizontal_alignment=ft.CrossAxisAlignment.END,
                                     col={"xs": 12, "sm": 12, "md": 1}
                                 )
                             ],
@@ -516,48 +520,39 @@ def main(page: ft.Page):
     )
 
     hero_section = ft.Container(
-        content=ft.Stack(
-            [
-                ft.Container(
-                    content=ft.Column(
-                        [
-                            ft.Text(
-                                'Bem-vindos à FerramentaFácil Express',
-                                size=32,
-                                weight=ft.FontWeight.BOLD,
-                                color='#FFFFFF',
-                                text_align=ft.TextAlign.CENTER,
-                            ),
-                            ft.Text(
-                                'As melhores ferramentas com entrega expressa!',
-                                size=18,
-                                color='#FFFFFF',
-                                text_align=ft.TextAlign.CENTER,
-                            ),
-                        ],
-                        horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                        spacing=10,
-                    ),
-                    alignment=ft.alignment.center,
-                    expand=True,
-                ),
+    content=ft.ResponsiveRow(
+        [
+            ft.Column(
+                [], col={"xs": 0, "sm": 1}
+            ),
 
-                ft.Container(
-                    content=ft.Image(
-                        src='Flet - Loja Online Versão 1.3.8/assets/imagens/LayoutLogin.png',
-                        height=500,
-                        fit=ft.ImageFit.CONTAIN,
+            ft.Column(
+                [
+                    ft.Image(
+                        src='Flet - Loja Online Versão 1.3.8/assets/imagens/hero_section_content.png',
+                        height=600,
                     ),
-                    alignment=ft.alignment.center,
-                ),
+                ],
+                col={"xs": 12, "sm": 10},
+                expand=True,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            ),
 
-            ],
-        ),
-        height=500,  
-        bgcolor='#F8F9FA',
-        alignment=ft.alignment.center,
-        margin=ft.margin.only(top=0, bottom=20)
-    )
+            ft.Column(
+                [], col={"xs": 0, "sm": 1},
+            ),
+        ],
+        alignment=ft.MainAxisAlignment.CENTER,
+        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+    ),
+    alignment=ft.alignment.center,
+    margin=ft.margin.symmetric(vertical=20),
+    bgcolor='#9D1C1C'
+)
+    
+    estrutura_cards = cards_produtos(produtos_organizados['Ferramentas Elétricas'])
+    cards_content = criar_content_produtos(estrutura_cards)
+
 
     base_dir = Path(__file__).parent
 
@@ -901,6 +896,7 @@ def main(page: ft.Page):
             [
                 juntar_header,
                 hero_section,
+                cards_content,
                 carousel,
                 ft.Container(
                     footer,
