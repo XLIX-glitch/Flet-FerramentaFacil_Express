@@ -15,7 +15,7 @@ def cards_produtos (lista_produtos: list):
                         height=150,
                     ),
                 ],
-                alignment=ft.alignment.center
+                alignment=ft.MainAxisAlignment.CENTER
             )
         else:
             imagem_card = ft.Container(
