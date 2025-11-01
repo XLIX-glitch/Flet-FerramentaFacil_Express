@@ -20,7 +20,7 @@ equipe_dados = {
     'thalys': {
         'nome': 'Thalys Rafel de Brito Batalha',
         'funcao': 'Analista de Requisitos e Tester',
-        'imagem': 'Projeto - Loja Online Versão 5.1/Flet/imagens/diego_jose.png',
+        'imagem': 'Projeto - Loja Online Versão 5.1/Flet/imagens/thalys.png',
         'telefone': '+55 84 9655-0680',
         'e-mail': 'teste1@gmail.com',
         'frase': '"Grandes coisas em projetos nunca são feitas por uma pessoa só, e sim por uma equipe." — Steve Jobs',

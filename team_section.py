@@ -1,7 +1,8 @@
 import flet as ft
 
-import home_page
 from dicionarios import equipe_dados
+
+from ui_components import footer_content
 
 def main(page: ft.Page):
     page.clean()
@@ -127,21 +128,7 @@ def main(page: ft.Page):
             alignment=ft.MainAxisAlignment.CENTER,
         )
     
-    botao_retornar = ft.Container(
-        ft.ResponsiveRow(
-            [
-                ft.ElevatedButton(
-                    'RETORNAR AO MENU', 
-                    on_click=lambda e: home_page.main(page),
-                    bgcolor="#102739",
-                    width=150,
-                    height=50,
-                    col={"xs": 12, "sm": 6, "md": 4, "lg": 2} 
-                ),
-            ],
-            alignment=ft.MainAxisAlignment.CENTER,
-        )
-    )
+    footer = footer_content(page)
 
     page.add(
         ft.Column(
@@ -149,7 +136,7 @@ def main(page: ft.Page):
                 header,
                 ft.Divider(thickness=3, color="#000000"),
                 container_cards_equipe,
-                botao_retornar,
+                footer,
             ],
         ),
     )
