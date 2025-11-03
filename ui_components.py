@@ -1,5 +1,11 @@
+import warnings
+warnings.filterwarnings("ignore", message="pkg_resources is deprecated")
+warnings.filterwarnings("ignore", category=UserWarning, module="gcloud")
+
 import flet as ft
 import random
+
+import pagina_login
 
 from dicionarios import produtos_organizados
 
@@ -208,8 +214,8 @@ def criar_content_produtos(content_page: ft.Control):
         ],
         run_spacing=50,
     )
-
-# Módulos do header, do Navber e do conteúdo de login 
+                
+# Módulos do header e do Navber
 def login_content(page):
     campo_usuario = ft.TextField(
         hint_text='Usuário',
@@ -351,7 +357,7 @@ def header_content(page, login_dialogue):
                                                 width=30,
                                                 height=30,
                                             ),
-                                            on_tap=lambda e: page.open(login_dialogue),
+                                            on_tap=lambda e: page.open(pagina_login.get_login_dialog(page)),
                                             mouse_cursor=ft.MouseCursor.CLICK,
                                         ),
                                         ft.Column(
@@ -362,7 +368,7 @@ def header_content(page, login_dialogue):
                                                         size=12,
                                                         color='#000000',
                                                     ),
-                                                    on_tap=lambda e: page.open(login_dialogue),
+                                                    on_tap=lambda e: page.open(pagina_login.get_login_dialog(page)),
                                                     mouse_cursor=ft.MouseCursor.CLICK,
                                                 ),
                                                 ft.GestureDetector(
@@ -371,7 +377,7 @@ def header_content(page, login_dialogue):
                                                         weight=ft.FontWeight.BOLD,
                                                         size=12,
                                                     ),
-                                                    on_tap=lambda e:page.open(login_dialogue),
+                                                    on_tap=lambda e: page.open(pagina_login.get_login_dialog(page)),
                                                     mouse_cursor=ft.MouseCursor.CLICK
                                                 ),
                                             ],
@@ -698,8 +704,9 @@ def hero_section_content(page):
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
         alignment=ft.alignment.center,
-        margin=ft.margin.symmetric(vertical=20),
-        bgcolor='#9D1C1C'
+        margin=ft.margin.only(top=10),
+        bgcolor='#9D1C1C',
+        height=610,
     )
 
     return hero_section

@@ -53,6 +53,24 @@ def main(page: ft.Page):
             ('Lucas Almeida', 'Gostei muito da organização das informações, encontrei o que precisava em poucos cliques.', 5)
         ]
 
+        hover_shadow = ft.BoxShadow(
+            blur_radius=15,
+            spread_radius=2,
+            color="#3F000000",
+            offset=ft.Offset(0, 8)
+            )
+            
+        normal_shadow = ft.BoxShadow(
+            blur_radius=8,
+            spread_radius=1,
+            color="#1F000000",
+            offset=ft.Offset(0, 4),
+        )
+
+        def hover_sombra(e):
+            e.control.shadow = hover_shadow if e.data == "true" else normal_shadow
+            e.control.update()
+
         cards_avaliacoes = []
         for nome, comentario, nota in avaliacoes:
             estrelas = ft.Row(
@@ -84,12 +102,11 @@ def main(page: ft.Page):
                 bgcolor='#FFFFFF',
                 border_radius=10,
                 padding=15,
-                shadow=ft.BoxShadow(
-                    blur_radius=8,
-                    color='#1F000000',
-                ),
+                shadow=normal_shadow,
+                on_hover=hover_sombra,
                 col={"xs": 12, "sm": 6, "md": 4, "lg": 3},
             )
+            
             cards_avaliacoes.append(conteudo)
 
         layout = ft.Column(
@@ -185,7 +202,7 @@ def main(page: ft.Page):
 
     carousel_image = ft.Container(
         content=switcher,
-        height=400,
+        height=500,
         expand=True,
         border_radius=8,
         alignment=ft.alignment.center,
@@ -200,7 +217,7 @@ def main(page: ft.Page):
                         message='Anterior',
                     ),
                     icon_color='#FF5100',
-                    icon_size=30,
+                    icon_size=40,
                     on_click=previous_image,
                 ),
                 ft.IconButton(
@@ -209,7 +226,7 @@ def main(page: ft.Page):
                         message='Próximo',
                     ),
                     icon_color='#FF5100',
-                    icon_size=30,
+                    icon_size=40,
                     on_click=next_image,
                 ),
             ],
@@ -259,6 +276,7 @@ def main(page: ft.Page):
             [
                 juntar_header,
                 hero_section,
+                ft.Divider(thickness=1, height=20, color="#8F000000"),
                 carousel,
                 ft.Column(
                     controls=[
