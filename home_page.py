@@ -1,10 +1,9 @@
 import flet as ft
 from pathlib import Path
 
-from dicionarios import produtos_organizados
-
 def main(page: ft.Page):
-    from ui_components import cards_produtos, criar_content_produtos, login_content, header_content, footer_content, navbar_content, hero_section_content
+    from ui_components import login_content, header_content, footer_content, navbar_content, hero_section_content
+    from ui_components import sessao_destaques, sessao_lancamentos, sessao_promocoes
     
     page.clean()
     page.title = 'Menu Principal - FerramentaFácil Express'
@@ -45,14 +44,115 @@ def main(page: ft.Page):
         switcher.transition = ft.AnimatedSwitcherTransition.FADE
 
         switcher.update()
+    
+    def sessao_avaliacoes(page):
+        avaliacoes = [
+            ('Carlos Manoel', 'A entrega foi muito rápida e o processo de compra no site foi simples e intuitivo, adorei a experiência!', 5),
+            ('Emanuelle Souza', 'O visual do site é moderno, bem estruturado e transmite profissionalismo. Dá vontade de olhar cada canto.', 5),
+            ('Vinícius Carvalho', 'Achei o preço justo pelo desempenho e qualidade. A relação custo-benefício me surprendeu.', 4),
+            ('Lucas Almeida', 'Gostei muito da organização das informações, encontrei o que precisava em poucos cliques.', 5)
+        ]
+
+        cards_avaliacoes = []
+        for nome, comentario, nota in avaliacoes:
+            estrelas = ft.Row(
+                [ft.Icon(name=ft.Icons.STAR, color="#FFEA00") for _ in range(nota)] +
+                [ft.Icon(name=ft.Icons.STAR_BORDER, color="#CCCCCC") for _ in range(5 - nota)],
+                alignment=ft.MainAxisAlignment.CENTER,
+                spacing=2
+            )
+
+            conteudo = ft.Container(
+                content=ft.Column(
+                    [
+                        estrelas,
+                        ft.Text(
+                            f'{comentario}', 
+                            italic=True,
+                            text_align=ft.TextAlign.CENTER
+                        ),
+                        ft.Text(
+                            f'- {nome}',
+                            color="#777777",
+                            size=12,
+                        ),
+                    ],
+                    spacing=5,
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                ),
+                bgcolor='#FFFFFF',
+                border_radius=10,
+                padding=15,
+                shadow=ft.BoxShadow(
+                    blur_radius=8,
+                    color='#1F000000',
+                ),
+                col={"xs": 12, "sm": 6, "md": 4, "lg": 3},
+            )
+            cards_avaliacoes.append(conteudo)
+
+        layout = ft.Column(
+            [
+                ft.Container(
+                    ft.Text(
+                        'Comentários dos Clientes',
+                        size=26,
+                        weight=ft.FontWeight.BOLD,
+                        color="#000000",
+                    ),
+                    alignment=ft.alignment.center_left,      
+                ),
+                ft.ResponsiveRow(
+                    [
+                        ft.Container(
+                            ft.Column(
+                                []
+                            ),
+                            col={"xs": 0, "sm": 0, "md": 1, "lg": 1},
+                        ),
+
+                        ft.Container(
+                            ft.ResponsiveRow(
+                                cards_avaliacoes,
+                                alignment=ft.MainAxisAlignment.CENTER,
+                                run_spacing=15,
+                                spacing=15,
+                            ),
+                            col={"xs": 12, "sm": 12, "md": 10, "lg": 10},
+                        ),
+
+                        ft.Container(
+                            ft.Column(
+                                []
+                            ),
+                            col={"xs": 0, "sm": 0, "md": 1, "lg": 1},
+                        ),
+                    ],
+                    alignment=ft.MainAxisAlignment.CENTER,
+                ),
+            ],
+            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+            spacing=20,
+        )
+
+        return ft.Container(
+            content=layout,
+            padding=ft.padding.only(left=20, top=0, right=20, bottom=20),
+            alignment=ft.alignment.center,
+            expand=True
+        )
 
     login_tela = login_content(page)
     header = header_content(page, login_tela)
     navbar = navbar_content(page)
     hero_section = hero_section_content(page)
-    
-    estrutura_cards = cards_produtos(produtos_organizados['Ferramentas Elétricas'])
-    cards_content = criar_content_produtos(estrutura_cards)
+
+    sessao_mais_populares = sessao_destaques()
+    sessao_ultimos_lancamentos = sessao_lancamentos()
+    sessao_promocoes_relampagos = sessao_promocoes()
+
+    sessao_comentarios = sessao_avaliacoes(page)
 
     base_dir = Path(__file__).parent
 
@@ -97,7 +197,7 @@ def main(page: ft.Page):
                 ft.IconButton(
                     icon=ft.Icons.CHEVRON_LEFT,
                     tooltip=ft.Tooltip(
-                        message='Anterior'
+                        message='Anterior',
                     ),
                     icon_color='#FF5100',
                     icon_size=30,
@@ -159,8 +259,19 @@ def main(page: ft.Page):
             [
                 juntar_header,
                 hero_section,
-                cards_content,
                 carousel,
+                ft.Column(
+                    controls=[
+                        sessao_mais_populares,
+                        
+                        sessao_ultimos_lancamentos,
+                        
+                        sessao_promocoes_relampagos,
+                        
+                        sessao_comentarios,
+                    ],
+                    spacing=50,
+                ),
                 ft.Container(
                     footer,
                     alignment=ft.alignment.center,

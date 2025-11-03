@@ -1,17 +1,8 @@
 import flet as ft
 
-import home_page
-import team_section
-import about_us
-import faq_page
-
-import ferramentas_eletricas_page
-import ferramentas_manuais_page
-import acessorios_page
-
 from dicionarios import produtos_organizados
 
-from ui_components import cards_produtos, criar_content_produtos, navbar_content, footer_content
+from ui_components import navbar_content, footer_content, cards_de_produto, criar_content_produtos
 
 def main(page: ft.Page):
     page.clean()
@@ -47,8 +38,8 @@ def main(page: ft.Page):
 
     navbar = navbar_content(page)
 
-    estrutura_cards = cards_produtos(produtos_organizados['Acessórios'])
-    cards_content = criar_content_produtos(estrutura_cards)
+    estruturas_cards = cards_de_produto(produtos_organizados['Acessórios'])
+    cards_content = criar_content_produtos(estruturas_cards)
 
     footer = footer_content(page)
 

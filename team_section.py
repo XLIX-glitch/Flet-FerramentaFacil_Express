@@ -25,8 +25,8 @@ def main(page: ft.Page):
                     content=ft.ResponsiveRow(
                         [
                             ft.Text(
-                                'MEMBROS DA NOSSA EQUIPE',
-                                color="#575757",
+                                'Membros da Nossa Equipe',
+                                color="#000000",
                                 weight=ft.FontWeight.BOLD,
                                 style=ft.TextThemeStyle.HEADLINE_LARGE, 
                                 font_family='Open Sans',
@@ -55,7 +55,11 @@ def main(page: ft.Page):
                         col={"xs": 0, "lg": 12},
                     ),
                     bgcolor='#102739',
-                    padding=ft.padding.only(top=20, bottom=20)
+                    padding=ft.padding.only(top=20, bottom=20),
+                    shadow=ft.BoxShadow(
+                        color='#102739',
+                        blur_radius=10,
+                    )
                 ),
             ],
             spacing=0,
@@ -65,68 +69,113 @@ def main(page: ft.Page):
 
     cards_equipe = []
     for membro, infos in equipe_dados.items():
-        cards_equipe.append(
-            ft.Container(
-                content=ft.Column(
-                    [
-                        ft.CircleAvatar(
-                            foreground_image_src=infos['imagem'],
-                            radius=50,
+        card = ft.Container(
+            content=ft.Column(
+                [
+                    ft.Container(
+                        ft.Image(
+                            src=infos['imagem'], 
+                            fit=ft.ImageFit.CONTAIN
                         ),
-                        ft.Text(
-                            infos['nome'],
-                            weight=ft.FontWeight.BOLD,
-                            color="#000000",
-                            size=16,
-                        ),
-                        ft.Text(
-                            infos['funcao'],
-                            weight=ft.FontWeight.BOLD,
-                            color='#DD6E15',
-                            size=14,
-                        ),
-                        ft.Text(
-                            infos['frase'],
-                            size=13,
-                            italic=True,
-                            color='#000000',
-                        ),
-                        ft.Text(
-                            infos['telefone'],
-                            size=13,
-                            color='#000000',
-                        ),
-                        ft.Text(
-                            infos['e-mail'],
-                            size=13,
-                            color='#000000',
-                        ),
-                        ft.Text(
-                            infos['github'],
-                            size=13,
-                            color='#000000',
-                        ),
-                    ],
-                    height=370,
-                    run_spacing=20,
-                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                    
-                ),
-                bgcolor="#FFFFFF",
-                border_radius=8,
-                shadow=ft.BoxShadow(blur_radius=3),
-                padding=ft.padding.all(10),
-                col={"xs": 12, "sm": 6, "md": 6, "lg": 4},
-                margin=ft.margin.only(left=30, right=30, bottom=10)
-            ),
-        )
+                        width=260,
+                        height=240,
+                        border_radius=10,
+                        clip_behavior=ft.ClipBehavior.HARD_EDGE,
+                    ),
+                    ft.Column(
+                        [
 
-        container_cards_equipe = ft.ResponsiveRow(
-            cards_equipe,
-            spacing=20,
-            run_spacing=20,
-            alignment=ft.MainAxisAlignment.CENTER,
+                        ],
+                    ),
+                    ft.Text(
+                        infos['nome'],
+                        weight=ft.FontWeight.BOLD,
+                        color="#FFFFFF",
+                        size=16,
+                        text_align=ft.TextAlign.CENTER,
+                    ),
+                    ft.Text(
+                        infos['e-mail'],
+                        size=13,
+                        color="#6FCF97",
+                        text_align=ft.TextAlign.CENTER,
+                        weight=ft.FontWeight.BOLD
+                    ),
+                    ft.Text(
+                        infos['frase'],
+                        size=13,
+                        color='#BBBBBB',
+                        italic=True,
+                        text_align=ft.TextAlign.CENTER,
+                    ),
+
+                    ft.Row(
+                        [
+                            ft.IconButton(
+                                icon=ft.Icons.FACEBOOK,
+                                tooltip=ft.Tooltip(
+                                    message=infos['facebook']
+                                ),
+                                icon_color='#BBBBBB',
+                                icon_size=18,
+                            ),
+                            ft.IconButton(
+                                icon=ft.Icons.SHARE,
+                                tooltip=ft.Tooltip(
+                                    message=infos['github']
+                                ),
+                                icon_color='#BBBBBB',
+                                icon_size=18,
+                            ),
+                            ft.IconButton(
+                                icon=ft.Icons.PHONE,
+                                tooltip=ft.Tooltip(
+                                    message=infos['telefone']
+                                ),
+                                icon_color='#BBBBBB',
+                                icon_size=18,
+                            ),
+                            ft.IconButton(
+                                icon=ft.Icons.GROUP,
+                                tooltip=ft.Tooltip(
+                                    message=infos['funcao']
+                                ),
+                                icon_color='#BBBBBB',
+                                icon_size=18,
+                            ),
+                        ],
+                        spacing=0,
+                        alignment=ft.MainAxisAlignment.CENTER,
+                    ),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=7,
+            ),
+            bgcolor="#7E7B7B", 
+            padding=ft.padding.all(20),
+            border_radius=10,
+            shadow=ft.BoxShadow(
+                color="#000000",
+                blur_radius=11, 
+                spread_radius=2, 
+                offset=ft.Offset(0, 4)
+            ),
+            col={"xs": 12, "sm": 6, "md": 4, "lg": 3},
+            margin=ft.margin.symmetric(horizontal=12, vertical=10),
+            width=260,
+            height=450,
         )
+        cards_equipe.append(card)
+
+    container_cards_equipe = ft.ResponsiveRow(
+        controls=cards_equipe,
+        spacing=20,
+        run_spacing=20,
+        alignment=ft.MainAxisAlignment.CENTER,
+        expand=True,
+        vertical_alignment=ft.CrossAxisAlignment.START,
+    )
     
     footer = footer_content(page)
 

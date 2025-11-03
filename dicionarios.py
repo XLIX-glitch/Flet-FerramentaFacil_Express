@@ -1,30 +1,34 @@
+
 equipe_dados = {
-    'diego_jose' : {
+    'diego_jose': {
         'nome': 'Diego José Araújo Santos',
         'funcao': 'Designer, Programador Front-End e Tester',
-        'imagem': 'Projeto - Loja Online Versão 5.1/Flet/imagens/diego_jose.png',
+        'imagem': 'Flet - Loja Online Versão 1.3.8/assets/imagens/imagens_integrantes/diego_jose.jpg',
         'telefone': '+55 84 9844-1804',
-        'e-mail': 'teste3@gmail.com',
+        'e-mail': 'jose.diego1@escolar.ifrn.edu.br',
         'frase': '"A perfeição é alcançada, não quando não há mais nada a acrescentar, mas quando não há mais nada a retirar." — Antoine de Saint-Exupéry',
-        'github': 'GITHUB 1'
+        'github': 'GITHUB 1',
+        'facebook': 'DIego José'
     },
     'diego_samuel': {
         'nome': 'Diego Samuel Soares Pereira de Araújo',
         'funcao': 'Desenvolvedor, Programador Back-End, Engenheiro de Requisitos e Tester',
-        'imagem': 'Projeto - Loja Online Versão 5.1/Flet/imagens/diego_samuel.png',
+        'imagem': 'Flet - Loja Online Versão 1.3.8/assets/imagens/imagens_integrantes/diego_samuel.png',
         'telefone': '+55 84 9817-7658',
-        'e-mail': 'teste2@gma.com',
+        'e-mail': 'diego.samuel@escolar.ifrn.edu.br',
         'frase': '"A disciplina é a ponte entre objetivos e realizações." — Jim Rohn',
-        'github': 'GITHUB 2'
+        'github': 'GITHUB 2',
+        'facebook': 'DIego Samuel'
     },
     'thalys': {
         'nome': 'Thalys Rafel de Brito Batalha',
-        'funcao': 'Analista de Requisitos e Tester',
-        'imagem': 'Projeto - Loja Online Versão 5.1/Flet/imagens/thalys.png',
+        'funcao': 'Analista de Requisitos, Tester e Designer',
+        'imagem': 'Flet - Loja Online Versão 1.3.8/assets/imagens/imagens_integrantes/imagens/thalys.png',
         'telefone': '+55 84 9655-0680',
-        'e-mail': 'teste1@gmail.com',
+        'e-mail': 'batalha.brito@escolar.ifrn.edu.br',
         'frase': '"Grandes coisas em projetos nunca são feitas por uma pessoa só, e sim por uma equipe." — Steve Jobs',
-        'github': 'GITHUB 3'
+        'github': 'GITHUB 3',
+        'facebook': 'Thalys Rafael'
     }
 }
 

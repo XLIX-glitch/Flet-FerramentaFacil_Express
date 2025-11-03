@@ -1,9 +1,16 @@
 import flet as ft
+import random
 
 from dicionarios import produtos_organizados
 
 # Módulos para os cards de produto
-def cards_produtos (lista_produtos: list):
+def obter_todos_produtos():
+    todos_produtos = []
+    for categoria in produtos_organizados.values():
+        todos_produtos.extend(categoria)
+    return todos_produtos
+
+def cards_de_produto(lista_produtos: list, em_promocao=False):
     cards_de_produtos = []
 
     for produto in lista_produtos:
@@ -16,7 +23,7 @@ def cards_produtos (lista_produtos: list):
                         height=150,
                     ),
                 ],
-                alignment=ft.MainAxisAlignment.CENTER
+                alignment=ft.MainAxisAlignment.CENTER,
             )
         else:
             imagem_card = ft.Container(
@@ -29,23 +36,52 @@ def cards_produtos (lista_produtos: list):
                 height=150,
                 bgcolor="#382F2F",
             )
-    
+        
         imagem_content = ft.Container(
             content=imagem_card,
-            border_radius=8,
+            border_radius=10,
         )
 
+        if len(produto['descricao']) > 100:
+            descricao_curta = produto['descricao'][:100] + "..."
+        else:
+            descricao_curta = produto['descricao']
+        
+        if em_promocao and 'preco_promocional' in produto:
+            preco_atual = produto['preco_promocional']
+            preco_antigo = produto['preco']
+            preco_display = ft.Column(
+                controls=[
+                    ft.Text(
+                        f'R$ {preco_antigo:.2f}',
+                        size=16,
+                        color="#888888",
+                        style=ft.TextStyle(
+                            decoration=ft.TextDecoration.LINE_THROUGH,
+                        ),
+                    ),
+                    ft.Text(
+                        f'R$ {preco_atual:.2f}',
+                        size=26,
+                        weight=ft.FontWeight.BOLD,
+                        color="#E63333"
+                    ),
+                ],
+                spacing=2,
+            )
+        else:
+            preco_display = ft.Text(
+                f'R$ {produto['preco']:.2f}',
+                size=26,
+                weight=ft.FontWeight.BOLD,
+                color="#000000"
+            )
         product_footer = ft.Row(
             controls=[
                 ft.Container(
                     ft.Column(
                         controls=[
-                            ft.Text(
-                                f'R$ {produto['preco']:.2f}',
-                                size=24,
-                                weight=ft.FontWeight.BOLD,
-                                color="#000000"
-                            ),
+                            preco_display,
                             ft.Text(
                                 f'Em Estoque ({produto['estoque']})',
                                 size=14,
@@ -55,24 +91,39 @@ def cards_produtos (lista_produtos: list):
                         ],
                         spacing=5,
                     ),
-                    expand=True
+                    expand=True,
                 ),
-                
+
                 ft.ElevatedButton(
                     text='Comprar',
                     icon=ft.Icons.SHOPPING_CART_OUTLINED,
                     style=ft.ButtonStyle(
-                        padding=ft.padding.symmetric(vertical=10, horizontal=15),
-                        shape=ft.RoundedRectangleBorder(radius=8),
+                        padding=ft.padding.symmetric(vertical=12, horizontal=18),
+                        shape=ft.RoundedRectangleBorder(radius=10),
                         text_style=ft.TextStyle(
                             size=16,
                             weight=ft.FontWeight.BOLD,
                         ),
+                        bgcolor="#007BFF",
+                        color="#FFFFFF",
                     ),
-                    on_click=lambda e:None,
+                    on_click=lambda e: None,
                 )
             ],
-            alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+            alignment=ft.MainAxisAlignment.SPACE_BETWEEN
+        )
+
+        hover_shadow = ft.BoxShadow(
+            blur_radius=15,
+            spread_radius=2,
+            color="#3F000000",
+            offset=ft.Offset(0, 8)
+        )
+        normal_shadow = ft.BoxShadow(
+            blur_radius=8,
+            spread_radius=1,
+            color="#1F000000",
+            offset=ft.Offset(0, 4),
         )
 
         card_content = ft.Container(
@@ -82,9 +133,18 @@ def cards_produtos (lista_produtos: list):
 
                     ft.Text(
                         produto['nome'],
-                        size=20,
+                        size=22,
                         weight=ft.FontWeight.BOLD,
                         max_lines=1,
+                        overflow=ft.TextOverflow.ELLIPSIS,
+                        color="#333333"
+                    ),
+
+                    ft.Text(
+                        descricao_curta,
+                        size=14,
+                        color="#666666",
+                        max_lines=2,
                         overflow=ft.TextOverflow.ELLIPSIS,
                     ),
 
@@ -98,25 +158,23 @@ def cards_produtos (lista_produtos: list):
                     ft.Divider(
                         height=1,
                         thickness=1,
-                        color='#8A000000'
+                        color="#8A000000",
                     ),
 
                     product_footer,
                 ],
-                spacing=11,
+                spacing=12,
             ),
-            padding=ft.padding.all(15),
-            bgcolor='#FFFFFF',
-            border_radius=12,
+            padding=ft.padding.all(18),
+            bgcolor="#FFFFFF",
+            border_radius=15,
             border=ft.border.all(
-                1, 
-                '#FFE0E0E0'
+                1,
+                "#E0E0E0"
             ),
-            shadow=ft.BoxShadow(
-                blur_radius=5,
-                color='#1F000000',
-            ),
+            shadow=normal_shadow,
             col={"xs": 12, "sm": 6, "md": 4, "lg": 3},
+            on_hover=lambda e: setattr(e.control, 'shadow', hover_shadow if e.data == 'true' else normal_shadow) or e.control.update()
         )
 
         cards_de_produtos.append(card_content)
@@ -127,7 +185,7 @@ def cards_produtos (lista_produtos: list):
         alignment=ft.MainAxisAlignment.CENTER,
     )
 
-def criar_content_produtos (content_page: ft.Control):
+def criar_content_produtos(content_page: ft.Control):
     conteudo = ft.Column(
         [
             content_page,
@@ -152,7 +210,7 @@ def criar_content_produtos (content_page: ft.Control):
     )
 
 # Módulos do header, do Navber e do conteúdo de login 
-def login_content (page):
+def login_content(page):
     campo_usuario = ft.TextField(
         hint_text='Usuário',
         color='#FFFFFF',
@@ -245,7 +303,7 @@ def login_content (page):
     
     return login_tela
 
-def header_content (page, login_dialogue):
+def header_content(page, login_dialogue):
     header = ft.Container(
         content=ft.ResponsiveRow(
             [   
@@ -388,7 +446,7 @@ def header_content (page, login_dialogue):
 
     return header
 
-def navbar_content (page):
+def navbar_content(page):
     import acessorios_page, faq_page, ferramentas_eletricas_page, ferramentas_manuais_page, home_page
     navbar = ft.Container(
         content=ft.ResponsiveRow(
@@ -612,7 +670,7 @@ def navbar_content (page):
     return navbar
 
 # Modúlo do Hero Section
-def hero_section_content (page):
+def hero_section_content(page):
     hero_section = ft.Container(
         content=ft.ResponsiveRow(
             [
@@ -647,7 +705,7 @@ def hero_section_content (page):
     return hero_section
 
 # Módulo do Footer
-def footer_content (page):  
+def footer_content(page):  
     import about_us, team_section
     footer = ft.ResponsiveRow(
         [
@@ -889,3 +947,68 @@ def footer_content (page):
     )
 
     return footer
+
+# Módulos para a criação de cada sessão do Home Page (Últimos lançamentos, Promoções Relâmpagos e Mais Populares)
+def sessao_lancamentos(num_produtos=4):
+    todos_produtos = obter_todos_produtos()
+    produtos_selecionados = random.sample(todos_produtos, min(num_produtos, len(todos_produtos)))
+
+    return ft.Column(
+        controls=[
+            ft.Container(
+                content=ft.Text(
+                    'Últimos Lançamentos',
+                    size=26,
+                    weight=ft.FontWeight.BOLD,
+                    color="#000000"
+                ),
+                alignment=ft.alignment.center_left,
+            ),
+            criar_content_produtos(cards_de_produto(produtos_selecionados))
+        ],
+        spacing=20
+    )
+
+def sessao_promocoes(num_produtos=4):
+    todos_produtos = obter_todos_produtos()
+    produtos_selecionados = random.sample(todos_produtos, min(num_produtos, len(todos_produtos)))
+
+    for produto in produtos_selecionados:
+        desconto = random.choice([0.25, 0.40, 0.50])
+        produto['preco_promocional'] = round(produto['preco'] * (1 - desconto), 2)
+
+    return ft.Column(
+        controls=[
+            ft.Container(
+                content=ft.Text(
+                    'Promoções Relâmpagos',
+                    size=26,
+                    weight=ft.FontWeight.BOLD,
+                    color="#000000"
+                ),
+                alignment=ft.alignment.center_left,
+            ),
+            criar_content_produtos(cards_de_produto(produtos_selecionados, em_promocao=True))
+        ],
+        spacing=20,
+    )
+
+def sessao_destaques(num_produtos=4):
+    todos_produtos = obter_todos_produtos()
+    produtos_selecionados = random.sample(todos_produtos, min(num_produtos, len(todos_produtos)))
+
+    return ft.Column(
+        controls=[
+            ft.Container(
+                content=ft.Text(
+                    'Mais Populares',
+                    size=26,
+                    weight=ft.FontWeight.BOLD,
+                    color="#000000",
+                ),
+                alignment=ft.alignment.center_left,
+            ),
+            criar_content_produtos(cards_de_produto(produtos_selecionados)),
+        ],
+        spacing=20,
+    )

@@ -2,7 +2,7 @@ import flet as ft
 
 from dicionarios import produtos_organizados
 
-from ui_components import cards_produtos, criar_content_produtos, navbar_content, footer_content
+from ui_components import cards_de_produto, criar_content_produtos, navbar_content, footer_content
 
 def main(page: ft.Page):
     page.clean()
@@ -38,7 +38,7 @@ def main(page: ft.Page):
 
     navbar = navbar_content(page)
 
-    estrutura_cards = cards_produtos(produtos_organizados['Ferramentas Manuais'])
+    estrutura_cards = cards_de_produto(produtos_organizados['Ferramentas Manuais'])
     cards_content = criar_content_produtos(estrutura_cards)
 
     footer = footer_content(page)
