@@ -5,7 +5,7 @@ warnings.filterwarnings("ignore", category=UserWarning, module="gcloud")
 import flet as ft
 import random
 
-import pagina_login
+from pagina_login import main
 
 from dicionarios import produtos_organizados
 
@@ -216,98 +216,6 @@ def criar_content_produtos(content_page: ft.Control):
     )
                 
 # Módulos do header e do Navber
-def login_content(page):
-    campo_usuario = ft.TextField(
-        hint_text='Usuário',
-        color='#FFFFFF',
-        border=ft.InputBorder.UNDERLINE,
-        border_color='#FFFFFF',
-        focused_border_color='#FFFC00',
-        focused_color='#FFFC00',
-        filled=False,
-        hint_style=ft.TextStyle(color='#FFFFFF'),
-    )
-    
-    campo_email = ft.TextField(
-        hint_text='Digite o seu endereço de Email',
-        color='#FFFFFF',
-        border=ft.InputBorder.UNDERLINE,
-        border_color='#FFFFFF',
-        focused_border_color='#FFFC00',
-        focused_color='#FFFC00',
-        filled=False,
-        hint_style=ft.TextStyle(color='#FFFFFF'),
-    )
-
-    campo_senha = ft.TextField(
-        hint_text='×××××××',
-        color='#FFFFFF',
-        border=ft.InputBorder.UNDERLINE,
-        border_color='#FFFFFF',
-        password=True,
-        can_reveal_password=True,
-        max_length=10,
-        focused_border_color='#FFFC00',
-        focused_color='#FFFC00',
-        filled=False,
-        hint_style=ft.TextStyle(color='#FFFFFF'),
-    )
-
-    login_tela = ft.AlertDialog(
-        title=ft.Text(
-            'LOGIN',
-            weight=ft.FontWeight.BOLD,
-            color='#FFFFFF',
-            font_family='Open Sans'
-        ),
-        content=ft.Container(
-            ft.Column(
-                [
-                    ft.Column(
-                        [
-                            ft.Text('Nome do Usuário:', color='#FFFFFF'),
-                            campo_usuario,
-                        ],
-                        spacing=0,
-                    ),
-                    ft.Column(
-                        [
-                            ft.Text('E-mail:', color='#FFFFFF'),
-                            campo_email,
-                        ],
-                    ),
-                    ft.Column(
-                        [
-                            ft.Text('Senha:', color='#FFFFFF'),
-                            campo_senha,
-                        ],
-                    ),
-                    ft.Container(
-                        ft.Row(
-                            [
-                                ft.ElevatedButton(
-                                    'ENTRAR',
-                                    on_click=lambda e: page.close(login_tela), 
-                                    bgcolor="#00E1FF",
-                                    color='#FFFFFF',
-                                    height=40,
-                                    width=230,
-                                ),
-                            ],
-                            alignment=ft.MainAxisAlignment.CENTER,
-                        ),
-                        margin=ft.margin.only(top=20)
-                    ),
-                ],
-            ),
-            height=320,
-            width=300,
-        ),
-        bgcolor='#4073FF',
-        shape=ft.RoundedRectangleBorder(radius=18.0),
-    )
-    
-    return login_tela
 
 def header_content(page):
     header = ft.Container(
@@ -357,7 +265,7 @@ def header_content(page):
                                                 width=30,
                                                 height=30,
                                             ),
-                                            on_tap=lambda e: pagina_login.main(page),
+                                            on_tap=lambda e: page.open(main(page)),
                                             mouse_cursor=ft.MouseCursor.CLICK,
                                         ),
                                         ft.Column(
@@ -368,7 +276,7 @@ def header_content(page):
                                                         size=12,
                                                         color='#000000',
                                                     ),
-                                                    on_tap=lambda e: pagina_login.main(page),
+                                                    on_tap=lambda e: page.open(main(page)),
                                                     mouse_cursor=ft.MouseCursor.CLICK,
                                                 ),
                                                 ft.GestureDetector(
@@ -377,7 +285,7 @@ def header_content(page):
                                                         weight=ft.FontWeight.BOLD,
                                                         size=12,
                                                     ),
-                                                    on_tap=lambda e: pagina_login.main(page),
+                                                    on_tap=lambda e: page.open(main(page)),
                                                     mouse_cursor=ft.MouseCursor.CLICK
                                                 ),
                                             ],
@@ -960,7 +868,7 @@ def sessao_lancamentos(num_produtos=4):
     todos_produtos = obter_todos_produtos()
     produtos_selecionados = random.sample(todos_produtos, min(num_produtos, len(todos_produtos)))
 
-    return ft.Column(
+    layout_lancamentos = ft.Column(
         controls=[
             ft.Container(
                ft.Container(
@@ -981,6 +889,13 @@ def sessao_lancamentos(num_produtos=4):
         spacing=20
     )
 
+    return ft.Container(
+            content=layout_lancamentos,
+            padding=ft.padding.only(left=20, top=0, right=20, bottom=20),
+            alignment=ft.alignment.center,
+            expand=True
+    )
+
 def sessao_promocoes(num_produtos=4):
     todos_produtos = obter_todos_produtos()
     produtos_selecionados = random.sample(todos_produtos, min(num_produtos, len(todos_produtos)))
@@ -989,7 +904,7 @@ def sessao_promocoes(num_produtos=4):
         desconto = random.choice([0.25, 0.40, 0.50])
         produto['preco_promocional'] = round(produto['preco'] * (1 - desconto), 2)
 
-    return ft.Column(
+    layout_promocoes = ft.Column(
         controls=[
             ft.Container(
                 content=ft.Text(
@@ -1005,11 +920,18 @@ def sessao_promocoes(num_produtos=4):
         spacing=20,
     )
 
+    return ft.Container(
+            content=layout_promocoes,
+            padding=ft.padding.only(left=20, top=0, right=20, bottom=20),
+            alignment=ft.alignment.center,
+            expand=True
+    )
+
 def sessao_destaques(num_produtos=4):
     todos_produtos = obter_todos_produtos()
     produtos_selecionados = random.sample(todos_produtos, min(num_produtos, len(todos_produtos)))
 
-    return ft.Column(
+    layout_destaques = ft.Column(
         controls=[
             ft.Container(
                 content=ft.Text(
@@ -1023,4 +945,11 @@ def sessao_destaques(num_produtos=4):
             criar_content_produtos(cards_de_produto(produtos_selecionados)),
         ],
         spacing=20,
+    )
+
+    return ft.Container(
+            content=layout_destaques,
+            padding=ft.padding.only(left=20, top=0, right=20, bottom=20),
+            alignment=ft.alignment.center,
+            expand=True
     )

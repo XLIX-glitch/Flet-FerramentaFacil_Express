@@ -2,7 +2,7 @@ import flet as ft
 from pathlib import Path
 
 def main(page: ft.Page):
-    from ui_components import login_content, header_content, footer_content, navbar_content, hero_section_content
+    from ui_components import header_content, footer_content, navbar_content, hero_section_content
     from ui_components import sessao_destaques, sessao_lancamentos, sessao_promocoes
     
     page.clean()
