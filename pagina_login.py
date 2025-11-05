@@ -3,7 +3,7 @@ warnings.filterwarnings("ignore", message="pkg_resources is deprecated")
 warnings.filterwarnings("ignore", category=UserWarning, module="gcloud")
 
 import flet as ft
-import pyrebase as pyrebase
+import pyrebase
 
 firebaseConfig = { 
   'apiKey': "AIzaSyCBTuS458t2fEOwSVaXDQgvy6Ufd7fV5vI",
@@ -128,8 +128,9 @@ def main(page: ft.Page):
                 
                 usuario.value = ""
                 senha.value = ""
+                
         else:
-            # Modo Cadastro
+
             try:
                 auth.create_user_with_email_and_password(user_email, user_password)
                 print("Cadastro bem-sucedido!")  

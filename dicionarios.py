@@ -13,7 +13,7 @@ equipe_dados = {
     'diego_samuel': {
         'nome': 'Diego Samuel Soares Pereira de Araújo',
         'funcao': 'Desenvolvedor, Programador Back-End, Engenheiro de Requisitos e Tester',
-        'imagem': 'Flet - Loja Online Versão 1.3.8/assets/imagens/imagens_integrantes/diego_samuel.png',
+        'imagem': 'Flet - Loja Online Versão 1.3.8/assets/imagens/imagens_integrantes/diego_samuel.jpg',
         'telefone': '+55 84 9817-7658',
         'e-mail': 'diego.samuel@escolar.ifrn.edu.br',
         'frase': '"A disciplina é a ponte entre objetivos e realizações." — Jim Rohn',
@@ -23,7 +23,7 @@ equipe_dados = {
     'thalys': {
         'nome': 'Thalys Rafel de Brito Batalha',
         'funcao': 'Analista de Requisitos, Tester e Designer',
-        'imagem': 'Flet - Loja Online Versão 1.3.8/assets/imagens/imagens_integrantes/imagens/thalys.png',
+        'imagem': 'Flet - Loja Online Versão 1.3.8/assets/imagens/imagens_integrantes/thalys.png',
         'telefone': '+55 84 9655-0680',
         'e-mail': 'batalha.brito@escolar.ifrn.edu.br',
         'frase': '"Grandes coisas em projetos nunca são feitas por uma pessoa só, e sim por uma equipe." — Steve Jobs',

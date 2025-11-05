@@ -160,8 +160,8 @@ def main(page: ft.Page):
             expand=True
         )
 
-    login_tela = login_content(page)
-    header = header_content(page, login_tela)
+    # login_tela = login_content(page)
+    header = header_content(page)
     navbar = navbar_content(page)
     hero_section = hero_section_content(page)
 

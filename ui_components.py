@@ -150,7 +150,7 @@ def cards_de_produto(lista_produtos: list, em_promocao=False):
                         descricao_curta,
                         size=14,
                         color="#666666",
-                        max_lines=2,
+                        max_lines=1,
                         overflow=ft.TextOverflow.ELLIPSIS,
                     ),
 
@@ -309,7 +309,7 @@ def login_content(page):
     
     return login_tela
 
-def header_content(page, login_dialogue):
+def header_content(page):
     header = ft.Container(
         content=ft.ResponsiveRow(
             [   
@@ -357,7 +357,7 @@ def header_content(page, login_dialogue):
                                                 width=30,
                                                 height=30,
                                             ),
-                                            on_tap=lambda e: page.open(pagina_login.get_login_dialog(page)),
+                                            on_tap=lambda e: pagina_login.main(page),
                                             mouse_cursor=ft.MouseCursor.CLICK,
                                         ),
                                         ft.Column(
@@ -368,7 +368,7 @@ def header_content(page, login_dialogue):
                                                         size=12,
                                                         color='#000000',
                                                     ),
-                                                    on_tap=lambda e: page.open(pagina_login.get_login_dialog(page)),
+                                                    on_tap=lambda e: pagina_login.main(page),
                                                     mouse_cursor=ft.MouseCursor.CLICK,
                                                 ),
                                                 ft.GestureDetector(
@@ -377,7 +377,7 @@ def header_content(page, login_dialogue):
                                                         weight=ft.FontWeight.BOLD,
                                                         size=12,
                                                     ),
-                                                    on_tap=lambda e: page.open(pagina_login.get_login_dialog(page)),
+                                                    on_tap=lambda e: pagina_login.main(page),
                                                     mouse_cursor=ft.MouseCursor.CLICK
                                                 ),
                                             ],
@@ -962,6 +962,11 @@ def sessao_lancamentos(num_produtos=4):
 
     return ft.Column(
         controls=[
+            ft.Container(
+               ft.Container(
+                    col={"xs":0, "sm": 0, "md": 1}
+               ), 
+            ),
             ft.Container(
                 content=ft.Text(
                     'Últimos Lançamentos',
