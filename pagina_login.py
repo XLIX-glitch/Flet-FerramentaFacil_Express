@@ -179,7 +179,7 @@ def main(page: ft.Page):
             bgcolor="#000000", 
             padding=20,
         ), 
-        modal=True,
+        modal=False,
         bgcolor="#000000",
     )
     

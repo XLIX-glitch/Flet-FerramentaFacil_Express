@@ -353,7 +353,7 @@ def header_content(page):
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
             alignment=ft.MainAxisAlignment.CENTER,
         ),
-        bgcolor='#F2FF00',
+        bgcolor="#FFEA00",
         alignment=ft.alignment.center,
         padding=ft.padding.only(left=30, right=30, top=20, bottom=20),
     )
@@ -361,7 +361,7 @@ def header_content(page):
     return header
 
 def navbar_content(page):
-    import acessorios_page, faq_page, ferramentas_eletricas_page, ferramentas_manuais_page, home_page
+    import acessorios_page, faq_page, ferramentas_eletricas_page, ferramentas_manuais_page, home_page, about_us
     navbar = ft.Container(
         content=ft.ResponsiveRow(
             [
@@ -472,15 +472,14 @@ def navbar_content(page):
                                                 ft.SubmenuButton(
                                                     ft.GestureDetector(
                                                         content=ft.Text(
-                                                            'Produtos',
+                                                            'Ofertas',
                                                             weight=ft.FontWeight.BOLD,
                                                             color='#FFFFFF',
                                                             font_family='Verdana',
                                                             size=13,
                                                         ),
-                                                        on_tap=lambda e:None,
-                                                        mouse_cursor=ft.MouseCursor.CLICK,
-
+                                                        on_tap=lambda e: None,
+                                                        mouse_cursor=ft.MouseCursor.CLICK
                                                     ),
                                                 ),
                                             ],
@@ -504,13 +503,13 @@ def navbar_content(page):
                                                 ft.SubmenuButton(
                                                     ft.GestureDetector(
                                                         content=ft.Text(
-                                                            'Ofertas',
+                                                            'Sobre',
                                                             weight=ft.FontWeight.BOLD,
                                                             color='#FFFFFF',
                                                             font_family='Verdana',
                                                             size=13,
                                                         ),
-                                                        on_tap=lambda e:None,
+                                                        on_tap=lambda e: about_us.main(page),
                                                         mouse_cursor=ft.MouseCursor.CLICK,
 
                                                     ),
@@ -595,8 +594,8 @@ def hero_section_content(page):
                 ft.Column(
                     [
                         ft.Image(
-                            src='Flet - Loja Online Versão 1.3.8/assets/imagens/hero_section_content.png',
-                            height=600,
+                            src='Flet - Loja Online Versão 1.3.8/assets/imagens/banner_hero_section.png',
+                            height=650,
                         ),
                     ],
                     col={"xs": 12, "sm": 10},
@@ -612,9 +611,9 @@ def hero_section_content(page):
             vertical_alignment=ft.CrossAxisAlignment.CENTER,
         ),
         alignment=ft.alignment.center,
-        margin=ft.margin.only(top=10),
-        bgcolor='#9D1C1C',
-        height=610,
+        margin=ft.margin.only(top=0),
+        bgcolor='#102739',
+        height=650,
     )
 
     return hero_section

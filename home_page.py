@@ -58,7 +58,7 @@ def main(page: ft.Page):
             spread_radius=2,
             color="#3F000000",
             offset=ft.Offset(0, 8)
-            )
+        )
             
         normal_shadow = ft.BoxShadow(
             blur_radius=8,
@@ -160,7 +160,6 @@ def main(page: ft.Page):
             expand=True
         )
 
-    # login_tela = login_content(page)
     header = header_content(page)
     navbar = navbar_content(page)
     hero_section = hero_section_content(page)
@@ -267,7 +266,7 @@ def main(page: ft.Page):
     footer = footer_content(page)
 
     juntar_header = ft.Column(
-        [header, navbar],
+        [header, navbar, hero_section],
         spacing=0
     )
 
@@ -275,7 +274,6 @@ def main(page: ft.Page):
         ft.Column(
             [
                 juntar_header,
-                hero_section,
                 ft.Divider(thickness=1, height=20, color="#8F000000"),
                 carousel,
                 ft.Column(
@@ -303,4 +301,4 @@ def main(page: ft.Page):
     page.update()
 
 if __name__ == '__main__':
-    ft.app(target=main, assets_dir="assets")
+    ft.app(target=main, assets_dir="assets", view=ft.WEB_BROWSER)
