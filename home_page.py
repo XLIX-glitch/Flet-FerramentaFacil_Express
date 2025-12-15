@@ -301,4 +301,4 @@ def main(page: ft.Page):
     page.update()
 
 if __name__ == '__main__':
-    ft.app(target=main, assets_dir="assets", view=ft.WEB_BROWSER)
+    ft.app(target=main, assets_dir="assets")

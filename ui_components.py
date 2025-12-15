@@ -704,6 +704,17 @@ def footer_content(page):
                                             on_tap=lambda e: team_section.main(page),
                                             mouse_cursor=ft.MouseCursor.CLICK,
                                         ),
+
+                                        ft.GestureDetector(
+                                            content=ft.Text(
+                                                'Paulo Henrique Ferreira Marques', 
+                                                color='#FFFFFF', 
+                                                font_family='Verdana', 
+                                                size=10,
+                                            ), 
+                                            on_tap=lambda e: team_section.main(page),
+                                            mouse_cursor=ft.MouseCursor.CLICK,
+                                        ),
                                     ],
                                     col={"xs": 12, "sm": 6, "md": 3, "lg": 3}
                                 ),
