@@ -1,94 +1,91 @@
-import flet as ft
-import psycopg2
-from psycopg2 import OperationalError
+from supabase import create_client, Client
 
-DB_NAME = "ferramenta_facil_express_db"
-DB_USER = "ferramenta_facil_express_db_user"
-DB_PASSWORD = "Vy2RfJZX1cy4nC7hFFaMpEIykGzNwCDA"
-DB_HOST = "dpg-d4ji8d24d50c73cmjer0-a.oregon-postgres.render.com"
-DB_PORT = "5432"
+# Configurações do Supabase
+SUPABASE_URL = "https://htyclsojvonggdesvcin.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh0eWNsc29qdm9uZ2dkZXN2Y2luIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjY5MjA1MzUsImV4cCI6MjA4MjQ5NjUzNX0.Zl4qSI8XvWn6X9IS7PcIs-18kl5H526UvAfD0SkoSJ4"  # Use a 'service_role' ou 'anon key' do seu painel
 
-def criar_conexao():
-    connection = None
-    try:
-        connection = psycopg2.connect(
-            database=DB_NAME,
-            user=DB_USER,
-            password=DB_PASSWORD,
-            host=DB_HOST,
-            port=DB_PORT
-        )
-        print("Conexão bem-sucedida ao banco de dados PostgreSQL")
-    except OperationalError as e:
-        print(f"O erro '{e}' ocorreu ao tentar conectar ao banco de dados")
-    return connection
-
-if __name__ == "__main__":
-    conexao = criar_conexao()
-    if conexao:
-        conexao.close()
-        print("Conexão fechada.")
-    else:
-        print("Falha ao estabelecer conexão.")
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def buscar_produtos_organizados():
-    conexao = criar_conexao()
-    
-    if conexao is None:
-        print("Não foi possível conectar para buscar produtos.")
-        return {}
-
-    produtos_organizados = {}
-
     try:
-        cursor = conexao.cursor()
-        
-        query = """
-            SELECT id, nome, marca, categoria, descricao, preco, estoque, image_url 
-            FROM produtos
-        """
-        cursor.execute(query)
-        linhas = cursor.fetchall()
+        response = supabase.table("produtos").select("*").execute()
 
-        for linha in linhas:
-            
-            p_id, p_nome, p_marca, p_categoria, p_descricao, p_preco, p_estoque, p_img_url = linha
+        lista_produtos = response.data
 
-            produto_dict = {
-                'id': p_id,
-                'nome': p_nome,
-                'marca': p_marca,
-                'descricao': p_descricao,
-                'preco': float(p_preco), 
-                'estoque': p_estoque,
-                'imagem_url': p_img_url 
+        produtos_organizados = {}
+
+        for produto in lista_produtos:
+            produto_mapeado = {
+                'id': produto['id'],
+                'nome': produto['nome'],
+                'marca': produto['marca'],
+                'descricao': produto['descricao'],
+                'preco': float(produto['preco']), 
+                'estoque': produto['estoque'],
+                'imagem_url': produto['image_url'],
+                'categoria': produto.get('categoria', 'Outros'),
             }
 
-            if p_categoria not in produtos_organizados:
-                produtos_organizados[p_categoria] = []
+            categoria = p['categoria']
+            if categoria not in produtos_organizados:
+                produtos_organizados[categoria] = []
             
-            produtos_organizados[p_categoria].append(produto_dict)
+            produtos_organizados[categoria].append(produto_dict)
 
-        cursor.close()
-        conexao.close()
         return produtos_organizados
 
     except Exception as e:
-        print(f"Erro ao buscar dados: {e}")
-        if conexao:
-            conexao.close()
+        print(f"Erro ao buscar dados no Supabase: {e}")
         return {}
 
+def buscar_produtos_do_banco():
+    try:
+        response = supabase.table("produtos").select("*").execute()
+        produtos = response.data
+        
+        produtos_organizados = {}
+        for produto in produtos:
+            categoria = produto.get('categoria', 'Outros')  
+            if categoria not in produtos_organizados:
+                produtos_organizados[categoria] = []
+            produtos_organizados[categoria].append(produto)
+        return produtos_organizados
+    except Exception as e:
+        print(f"Erro ao buscar produtos: {e}")
+        return {}  
+
+def obter_todos_produtos():
+    produtos_organizados = buscar_produtos_do_banco()  
+    todos_produtos = []
+    for categoria in produtos_organizados.values():
+        todos_produtos.extend(categoria)
+    return todos_produtos
+
+def comprar_produto(produto_id):
+    try:
+        response = supabase.table("produtos").select("estoque").eq("id", produto_id).single().execute()
+        produto = response.data
+
+        if produto and produto['estoque'] > 0:
+            novo_estoque = produto['estoque'] - 1
+            supabase.table("produtos").update({"estoque": novo_estoque}).eq("id", produto_id).execute()
+            print(f"Produto {produto_id} comprado com sucesso! Novo estoque: {novo_estoque}")
+        else:
+            print(f"Produto {produto_id} está fora de estoque ou não encontrado.")
+
+    except Exception as e:
+        print(f"Erro ao processar a compra: {e}")
+
+
+# Área de Teste
 if __name__ == "__main__":
-    print("Testando busca de produtos...")
+    print("Conectando ao Supabase e buscando produtos...")
     resultado = buscar_produtos_organizados()
     
     if resultado:
         print("Sucesso! Produtos recuperados.")
-
         primeira_cat = list(resultado.keys())[0]
         print(f"Categoria: {primeira_cat}")
         print(f"Primeiro produto: {resultado[primeira_cat][0]['nome']}")
-        print(f"URL da imagem: {resultado[primeira_cat][0]['imagem_url']}")
     else:
-        print("O dicionário retornou vazio. Verifique a conexão ou se há dados na tabela.")
+        print("Nenhum dado encontrado ou erro na conexão.")

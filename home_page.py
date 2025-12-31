@@ -3,7 +3,8 @@ from pathlib import Path
 
 def main(page: ft.Page):
     from ui_components import header_content, footer_content, navbar_content, hero_section_content
-    from ui_components import sessao_destaques, sessao_lancamentos, sessao_promocoes
+    from ui_components import sessao_destaques, sessao_lancamentos, sessao_promocoes, cards_de_produto
+    import database
     
     page.clean()
     page.title = 'Menu Principal - FerramentaFácil Express'
@@ -19,31 +20,7 @@ def main(page: ft.Page):
     page.bgcolor = '#FFFFFF'
     page.scroll = ft.ScrollMode.AUTO
 
-    def next_image(e):
-        nonlocal index
-        index = (index + 1) % len(imagens)
-        switcher.content = ft.Image(
-            src=imagens[index],
-            fit=ft.ImageFit.COVER,
-            border_radius=10,
-            expand=True,
-        )
-        switcher.transition = ft.AnimatedSwitcherTransition.FADE
-
-        switcher.update()
-    
-    def previous_image(e):
-        nonlocal index
-        index = (index - 1) % len(imagens)
-        switcher.content = ft.Image(
-            src=imagens[index],
-            fit=ft.ImageFit.COVER,
-            border_radius=10,
-            expand=True,
-        )
-        switcher.transition = ft.AnimatedSwitcherTransition.FADE
-
-        switcher.update()
+    produtos_iniciais = database.obter_todos_produtos()
     
     def sessao_avaliacoes(page):
         avaliacoes = [
@@ -65,7 +42,7 @@ def main(page: ft.Page):
             spread_radius=1,
             color="#1F000000",
             offset=ft.Offset(0, 4),
-        )
+         )
 
         def hover_sombra(e):
             e.control.shadow = hover_shadow if e.data == "true" else normal_shadow
@@ -159,14 +136,70 @@ def main(page: ft.Page):
             alignment=ft.alignment.center,
             expand=True
         )
+    
+    def atualizar_produtos():
+        print("Callback atualizar_produtos chamado!")  # Debug
+        produtos_atualizados = database.obter_todos_produtos()  # Busca fresca
+
+        nova_sessao_mais_populares = sessao_destaques(on_atualizar=atualizar_produtos)
+        nova_sessao_ultimos_lancamentos = sessao_lancamentos(on_atualizar=atualizar_produtos)
+        nova_sessao_promocoes_relampagos = sessao_promocoes(on_atualizar=atualizar_produtos)
+        sessoes_container.controls = [
+            nova_sessao_mais_populares,
+            nova_sessao_ultimos_lancamentos,
+            nova_sessao_promocoes_relampagos,
+            sessao_comentarios,  # Não muda
+        ]
+        page.update()
+
+    sessao_mais_populares = sessao_destaques(on_atualizar=atualizar_produtos)
+    sessao_ultimos_lancamentos = sessao_lancamentos(on_atualizar=atualizar_produtos)
+    sessao_promocoes_relampagos = sessao_promocoes(on_atualizar=atualizar_produtos)
+    sessao_comentarios = sessao_avaliacoes(page)
+
+    sessoes_container = ft.Column(
+        controls=[
+            sessao_mais_populares,
+            sessao_ultimos_lancamentos,
+            sessao_promocoes_relampagos,
+            sessao_comentarios,
+        ],
+        spacing=50,
+    )
+
+    def next_image(e):
+        nonlocal index
+        index = (index + 1) % len(imagens)
+        switcher.content = ft.Image(
+            src=imagens[index],
+            fit=ft.ImageFit.COVER,
+            border_radius=10,
+            expand=True,
+        )
+        switcher.transition = ft.AnimatedSwitcherTransition.FADE
+
+        switcher.update()
+    
+    def previous_image(e):
+        nonlocal index
+        index = (index - 1) % len(imagens)
+        switcher.content = ft.Image(
+            src=imagens[index],
+            fit=ft.ImageFit.COVER,
+            border_radius=10,
+            expand=True,
+        )
+        switcher.transition = ft.AnimatedSwitcherTransition.FADE
+
+        switcher.update()
 
     header = header_content(page)
     navbar = navbar_content(page)
     hero_section = hero_section_content(page)
 
-    sessao_mais_populares = sessao_destaques()
-    sessao_ultimos_lancamentos = sessao_lancamentos()
-    sessao_promocoes_relampagos = sessao_promocoes()
+    sessao_mais_populares = sessao_destaques(on_atualizar=atualizar_produtos)
+    sessao_ultimos_lancamentos = sessao_lancamentos(on_atualizar=atualizar_produtos)
+    sessao_promocoes_relampagos = sessao_promocoes(on_atualizar=atualizar_produtos)
 
     sessao_comentarios = sessao_avaliacoes(page)
 
@@ -276,18 +309,7 @@ def main(page: ft.Page):
                 juntar_header,
                 ft.Divider(thickness=1, height=20, color="#8F000000"),
                 carousel,
-                ft.Column(
-                    controls=[
-                        sessao_mais_populares,
-                        
-                        sessao_ultimos_lancamentos,
-                        
-                        sessao_promocoes_relampagos,
-                        
-                        sessao_comentarios,
-                    ],
-                    spacing=50,
-                ),
+                sessoes_container,
                 ft.Container(
                     footer,
                     alignment=ft.alignment.center,

@@ -7,16 +7,16 @@ import random
 
 from pagina_login import main
 
-from dicionarios import produtos_organizados
+import database
 
-# Módulos para os cards de produto
 def obter_todos_produtos():
+    produtos_organizados = database.buscar_produtos_do_banco()  
     todos_produtos = []
     for categoria in produtos_organizados.values():
         todos_produtos.extend(categoria)
     return todos_produtos
 
-def cards_de_produto(lista_produtos: list, em_promocao=False):
+def cards_de_produto(lista_produtos: list, em_promocao=False, on_atualizar=None):
     cards_de_produtos = []
 
     for produto in lista_produtos:
@@ -77,11 +77,17 @@ def cards_de_produto(lista_produtos: list, em_promocao=False):
             )
         else:
             preco_display = ft.Text(
-                f'R$ {produto['preco']:.2f}',
+                f'R$ {produto["preco"]:.2f}',
                 size=26,
                 weight=ft.FontWeight.BOLD,
                 color="#000000"
             )
+        
+        def handle_comprar_click(e, produto_id):
+            database.comprar_produto(produto_id)
+            if on_atualizar:
+                on_atualizar()
+
         product_footer = ft.Row(
             controls=[
                 ft.Container(
@@ -89,7 +95,7 @@ def cards_de_produto(lista_produtos: list, em_promocao=False):
                         controls=[
                             preco_display,
                             ft.Text(
-                                f'Em Estoque ({produto['estoque']})',
+                                f'Em Estoque ({produto["estoque"]})',
                                 size=14,
                                 color="#0F7909",
                                 weight=ft.FontWeight.W_600,
@@ -113,7 +119,7 @@ def cards_de_produto(lista_produtos: list, em_promocao=False):
                         bgcolor="#007BFF",
                         color="#FFFFFF",
                     ),
-                    on_click=lambda e: None,
+                    on_click=lambda e, produto_id=produto['id']: handle_comprar_click(e, produto_id),
                 )
             ],
             alignment=ft.MainAxisAlignment.SPACE_BETWEEN
@@ -155,7 +161,7 @@ def cards_de_produto(lista_produtos: list, em_promocao=False):
                     ),
 
                     ft.Text(
-                        f'Marca: {produto['marca']} • ID: {produto['id']}',
+                        f'Marca: {produto["marca"]} • ID: {produto["id"]}',
                         size=14,
                         color='#8A000000',
                         weight=ft.FontWeight.W_500,
@@ -216,7 +222,6 @@ def criar_content_produtos(content_page: ft.Control):
     )
                 
 # Módulos do header e do Navber
-
 def header_content(page):
     header = ft.Container(
         content=ft.ResponsiveRow(
@@ -874,7 +879,7 @@ def footer_content(page):
     return footer
 
 # Módulos para a criação de cada sessão do Home Page (Últimos lançamentos, Promoções Relâmpagos e Mais Populares)
-def sessao_lancamentos(num_produtos=4):
+def sessao_lancamentos(num_produtos=4, on_atualizar=None):
     todos_produtos = obter_todos_produtos()
     produtos_selecionados = random.sample(todos_produtos, min(num_produtos, len(todos_produtos)))
 
@@ -894,7 +899,7 @@ def sessao_lancamentos(num_produtos=4):
                 ),
                 alignment=ft.alignment.center_left,
             ),
-            criar_content_produtos(cards_de_produto(produtos_selecionados))
+            criar_content_produtos(cards_de_produto(produtos_selecionados, on_atualizar=on_atualizar)),
         ],
         spacing=20
     )
@@ -906,7 +911,7 @@ def sessao_lancamentos(num_produtos=4):
             expand=True
     )
 
-def sessao_promocoes(num_produtos=4):
+def sessao_promocoes(num_produtos=4, on_atualizar=None):
     todos_produtos = obter_todos_produtos()
     produtos_selecionados = random.sample(todos_produtos, min(num_produtos, len(todos_produtos)))
 
@@ -925,7 +930,7 @@ def sessao_promocoes(num_produtos=4):
                 ),
                 alignment=ft.alignment.center_left,
             ),
-            criar_content_produtos(cards_de_produto(produtos_selecionados, em_promocao=True))
+            criar_content_produtos(cards_de_produto(produtos_selecionados, em_promocao=True, on_atualizar=on_atualizar)),
         ],
         spacing=20,
     )
@@ -937,7 +942,7 @@ def sessao_promocoes(num_produtos=4):
             expand=True
     )
 
-def sessao_destaques(num_produtos=4):
+def sessao_destaques(num_produtos=4, on_atualizar=None):
     todos_produtos = obter_todos_produtos()
     produtos_selecionados = random.sample(todos_produtos, min(num_produtos, len(todos_produtos)))
 
@@ -952,7 +957,7 @@ def sessao_destaques(num_produtos=4):
                 ),
                 alignment=ft.alignment.center_left,
             ),
-            criar_content_produtos(cards_de_produto(produtos_selecionados)),
+            criar_content_produtos(cards_de_produto(produtos_selecionados, on_atualizar=on_atualizar)),
         ],
         spacing=20,
     )
